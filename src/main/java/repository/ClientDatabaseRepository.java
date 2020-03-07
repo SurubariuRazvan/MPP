@@ -3,9 +3,7 @@ package repository;
 import domain.Client;
 import validation.CRUDValidator;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class ClientDatabaseRepository extends AbstractDatabaseRepository<Integer, Client> {
     public ClientDatabaseRepository(CRUDValidator<Client> validator, Connection c) {
@@ -20,27 +18,32 @@ public class ClientDatabaseRepository extends AbstractDatabaseRepository<Integer
     }
 
     @Override
-    protected String findOneString(Integer integer) {
-        return null;
+    protected String findOneString(Integer id) {
+        return "SELECT * from \"Client\" where ID = " + id + ";";
     }
 
     @Override
     protected String findAllString() {
-        return null;
+        return "SELECT * from \"Client\";";
     }
 
     @Override
     protected String insertString(Client entity) {
-        return null;
+        return "INSERT INTO \"Client\" (id, name) " +
+                "VALUES (" + entity.getId()
+                + ",'" + entity.getName()
+                + "');";
     }
 
     @Override
-    protected String deleteString(Integer integer) {
-        return null;
+    protected String deleteString(Integer id) {
+        return "DELETE from \"Client\" where ID = " + id + ";";
     }
 
     @Override
     protected String updateString(Client entity) {
-        return null;
+        return "UPDATE \"Client\" SET "
+                + "name= '" + entity.getName()
+                + "' where ID = " + entity.getId() + ";";
     }
 }

@@ -7,4 +7,20 @@ public class Client extends Entity<Integer> {
         super(id);
         this.name = name;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "id=" + id +
+                ",name='" + name +
+                '}';
+    }
 }

@@ -1,7 +1,7 @@
 package ui;
 
 public class UI {
-    UI() {
+    public UI() {
     }
 
     public void run() {

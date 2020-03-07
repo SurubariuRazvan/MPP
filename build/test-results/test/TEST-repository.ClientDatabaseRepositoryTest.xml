@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="repository.ClientDatabaseRepositoryTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2020-03-03T07:57:44" hostname="DESKTOP-S4QSBQ8" time="0.14">
+  <properties/>
+  <testcase name="updateString()" classname="repository.ClientDatabaseRepositoryTest" time="0.064"/>
+  <testcase name="readEntity()" classname="repository.ClientDatabaseRepositoryTest" time="0.001"/>
+  <testcase name="deleteString()" classname="repository.ClientDatabaseRepositoryTest" time="0.022"/>
+  <testcase name="findAllString()" classname="repository.ClientDatabaseRepositoryTest" time="0.038"/>
+  <testcase name="insertString()" classname="repository.ClientDatabaseRepositoryTest" time="0.003"/>
+  <testcase name="findOneString()" classname="repository.ClientDatabaseRepositoryTest" time="0.004"/>
+  <system-out><![CDATA[Client{id=1,name='ion}
+Client{id=2,name='george}
+09:57:44.394 [Test worker] ERROR repository.ClientDatabaseRepositoryTest - cumva asta merge
+Client{id=3,name='maria}
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
