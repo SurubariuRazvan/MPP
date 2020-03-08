@@ -17,7 +17,7 @@ class ClientDatabaseRepositoryTest {
 
     @BeforeAll
     static void getConnection() throws SQLException {
-        Connection c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/MPP-app-test", "postgres", "793582");
+        Connection c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/MPP-app", "postgres", "793582");
         if (c.isClosed())
             logger.error("Connection failed");
         else
@@ -32,41 +32,30 @@ class ClientDatabaseRepositoryTest {
 
     @Test
     void findOneString() {
-        logger.info("findOne START");
         clientDatabaseRepository.findOne(3);
         System.out.println(clientDatabaseRepository.findOne(3));
-        logger.info("findOne FINISH");
     }
 
     @Test
     void findAllString() {
-        logger.info("findAll START");
         clientDatabaseRepository.findAll();
         for (Client client : clientDatabaseRepository.findAll())
             System.out.println(client);
-        logger.info("findAll FINISH");
-        logger.error("cumva asta merge");
     }
 
     @Test
     void insertString() {
-        logger.info("insert START");
         clientDatabaseRepository.save(new Client(3, "maria"));
-        logger.info("insert FINISH");
     }
 
     @Test
     void updateString() {
-        logger.info("update START");
         clientDatabaseRepository.update(new Client(3, "marcel"));
-        logger.info("update FINISH");
     }
 
     @Test
     void deleteString() {
-        logger.info("delete START");
         clientDatabaseRepository.delete(3);
-        logger.info("delete FINISH");
     }
 
 }

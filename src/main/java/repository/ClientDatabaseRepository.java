@@ -3,11 +3,14 @@ package repository;
 import domain.Client;
 import validation.CRUDValidator;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class ClientDatabaseRepository extends AbstractDatabaseRepository<Integer, Client> {
     public ClientDatabaseRepository(CRUDValidator<Client> validator, Connection c) {
-        super(validator, c);
+        super(validator, c, Client.class);
     }
 
     @Override
@@ -29,9 +32,8 @@ public class ClientDatabaseRepository extends AbstractDatabaseRepository<Integer
 
     @Override
     protected String insertString(Client entity) {
-        return "INSERT INTO \"Client\" (id, name) " +
-                "VALUES (" + entity.getId()
-                + ",'" + entity.getName()
+        return "INSERT INTO \"Client\" (name) " +
+                "VALUES ('" + entity.getName()
                 + "');";
     }
 
@@ -45,5 +47,27 @@ public class ClientDatabaseRepository extends AbstractDatabaseRepository<Integer
         return "UPDATE \"Client\" SET "
                 + "name= '" + entity.getName()
                 + "' where ID = " + entity.getId() + ";";
+    }
+
+    public Client findByName(String name) {
+        if (name == null)
+            throw new IllegalArgumentException("id is null");
+        logger.info("Find one " + entityType.getName() + " " + name);
+        Client entity = null;
+        try {
+            Statement stmt = c.createStatement();
+            var f = stmt.executeQuery(findByNameString(name));
+            if (f.next())
+                entity = readEntity(f);
+            f.close();
+            stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return entity;
+    }
+
+    private String findByNameString(String name) {
+        return "SELECT * from \"Client\" where name = '" + name + "';";
     }
 }

@@ -1,4 +1,3 @@
-Client{id=1,name='ion}
-Client{id=2,name='george}
-]09:57:44.394 [Test worker] ERROR repository.ClientDatabaseRepositoryTest - cumva asta merge
+Client{id=1,name='ION}
+Client{id=2,name='MARCEL}
 Client{id=3,name='maria}

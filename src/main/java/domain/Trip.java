@@ -4,11 +4,11 @@ import java.util.Date;
 import java.util.Objects;
 
 public class Trip extends Entity<Integer> {
-    Integer destinationID;
+    int destinationID;
     Date departure;
-    Integer freeSeats;
+    int freeSeats;
 
-    public Trip(Integer id, Integer destinationID, Date departure, Integer freeSeats) {
+    public Trip(Integer id, Integer destinationID, Date departure, int freeSeats) {
         super(id);
         this.destinationID = destinationID;
         this.departure = departure;
@@ -31,11 +31,11 @@ public class Trip extends Entity<Integer> {
         this.departure = departure;
     }
 
-    public Integer getFreeSeats() {
+    public int getFreeSeats() {
         return freeSeats;
     }
 
-    public void setFreeSeats(Integer freeSeats) {
+    public void setFreeSeats(int freeSeats) {
         this.freeSeats = freeSeats;
     }
 

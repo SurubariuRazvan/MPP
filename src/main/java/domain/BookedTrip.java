@@ -1,19 +1,24 @@
 package domain;
 
-public class BookedTrip extends Entity<BookedTrip.BookedTripID> {
-    int takenSeats;
+public class BookedTrip extends Entity<BookedTripID> {
+    int ClientID;
 
-    public BookedTrip(int clientID, int tripID, int takenSeats) {
-        super(new BookedTripID(clientID, tripID));
-        this.takenSeats = takenSeats;
+    public BookedTrip(int tripID, int seatNumber, int clientID) {
+        super(new BookedTripID(tripID, seatNumber));
+        this.ClientID = clientID;
     }
 
-    public int getClientID() {
-        return super.getId().getClientID();
+    public BookedTrip(BookedTripID bookedTripID, int clientID) {
+        super(bookedTripID);
+        this.ClientID = clientID;
     }
 
-    public void setClientID(int clientID) {
-        super.getId().setClientID(clientID);
+    public BookedTripID getBookedTripID() {
+        return super.getId();
+    }
+
+    public void setBookedTripID(BookedTripID bookedTripID) {
+        super.setId(bookedTripID);
     }
 
     public int getTripID() {
@@ -24,29 +29,20 @@ public class BookedTrip extends Entity<BookedTrip.BookedTripID> {
         super.getId().setTripID(tripID);
     }
 
-    static class BookedTripID {
-        int clientID;
-        int tripID;
+    public int getSeatNumber() {
+        return super.getId().getSeatNumber();
+    }
 
-        public BookedTripID(int clientID, int tripID) {
-            this.clientID = clientID;
-            this.tripID = tripID;
-        }
+    public void setSeatNumber(int seatNumber) {
+        super.getId().setSeatNumber(seatNumber);
+    }
 
-        public int getClientID() {
-            return clientID;
-        }
+    public int getClientID() {
+        return ClientID;
+    }
 
-        public void setClientID(int clientID) {
-            this.clientID = clientID;
-        }
-
-        public int getTripID() {
-            return tripID;
-        }
-
-        public void setTripID(int tripID) {
-            this.tripID = tripID;
-        }
+    public void setClientID(int clientID) {
+        ClientID = clientID;
     }
 }
+

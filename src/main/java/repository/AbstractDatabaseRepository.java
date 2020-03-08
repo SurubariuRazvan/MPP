@@ -1,6 +1,8 @@
 package repository;
 
 import domain.Entity;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import validation.CRUDValidator;
 import validation.ValidationException;
 
@@ -12,12 +14,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractDatabaseRepository<ID, E extends Entity<ID>> implements CRUDRepository<ID, E> {
-    private final Connection c;
-    private final CRUDValidator<E> validator;
 
-    AbstractDatabaseRepository(CRUDValidator<E> validator, Connection c) {
+    protected final Connection c;
+    protected final CRUDValidator<E> validator;
+    protected static final Logger logger = LogManager.getLogger();
+    protected final Class<E> entityType;
+
+    AbstractDatabaseRepository(CRUDValidator<E> validator, Connection c, Class<E> entityType) {
         this.validator = validator;
         this.c = c;
+        this.entityType = entityType;
     }
 
     /**
@@ -31,6 +37,7 @@ public abstract class AbstractDatabaseRepository<ID, E extends Entity<ID>> imple
     public E findOne(ID id) {
         if (id == null)
             throw new IllegalArgumentException("id is null");
+        logger.info("Find one " + entityType.getName() + " " + id);
         E entity = null;
         try {
             Statement stmt = c.createStatement();
@@ -53,6 +60,7 @@ public abstract class AbstractDatabaseRepository<ID, E extends Entity<ID>> imple
 
     @Override
     public Iterable<E> findAll() {
+        logger.info("Find all " + entityType.getName());
         List<E> entities = new ArrayList<>();
         try {
             Statement stmt = c.createStatement();
@@ -76,6 +84,7 @@ public abstract class AbstractDatabaseRepository<ID, E extends Entity<ID>> imple
     public E save(E entity) throws ValidationException {
         if (entity == null)
             throw new IllegalArgumentException("entity is null");
+        logger.info("Save " + entityType.getName() + " " + entity.getId());
         validator.validate(entity);
         try {
             Statement stmt = c.createStatement();
@@ -99,6 +108,7 @@ public abstract class AbstractDatabaseRepository<ID, E extends Entity<ID>> imple
     public E delete(ID id) {
         if (id == null)
             throw new IllegalArgumentException("id is null");
+        logger.info("Delete " + entityType.getName() + " " + id);
         try {
             Statement stmt = c.createStatement();
             E entity = this.findOne(id);
@@ -126,6 +136,7 @@ public abstract class AbstractDatabaseRepository<ID, E extends Entity<ID>> imple
     public E update(E entity) {
         if (entity == null)
             throw new IllegalArgumentException("entity is null");
+        logger.info("Update " + entityType.getName() + " with id:" + entity.getId() + " with:" + entity.toString());
         validator.validate(entity);
         try {
             Statement stmt = c.createStatement();
