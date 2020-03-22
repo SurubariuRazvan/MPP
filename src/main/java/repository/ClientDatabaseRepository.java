@@ -3,14 +3,14 @@ package repository;
 import domain.Client;
 import validation.CRUDValidator;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Properties;
 
 public class ClientDatabaseRepository extends AbstractDatabaseRepository<Integer, Client> {
-    public ClientDatabaseRepository(CRUDValidator<Client> validator, Connection c) {
-        super(validator, c, Client.class);
+    public ClientDatabaseRepository(CRUDValidator<Client> validator, Properties props) {
+        super(validator, props, Client.class);
     }
 
     @Override
@@ -55,8 +55,8 @@ public class ClientDatabaseRepository extends AbstractDatabaseRepository<Integer
         logger.info("Find one " + entityType.getName() + " " + name);
         Client entity = null;
         try {
-            Statement stmt = c.createStatement();
-            var f = stmt.executeQuery(findByNameString(name));
+            Statement stmt = dbUtils.getConnection().createStatement();
+            ResultSet f = stmt.executeQuery(findByNameString(name));
             if (f.next())
                 entity = readEntity(f);
             f.close();

@@ -1,0 +1,85 @@
+* {
+    -fx-primary: #2A2E37;
+    -fx-secondary: #FFD85E;
+    -fx-tertiary: #43a047;
+    -fx-add: #5e35b1;
+    -fx-search: #29b6f6;
+    -fx-primarytext: #B2B2B2;
+    -fx-blue: #1976D2;
+    -fx-red: #FF0000;
+}
+
+.root {
+    -fx-background-color: -fx-primary;
+}
+
+.glyph-icon {
+    -fx-fill: -fx-primarytext;
+}
+
+/*Default*/
+
+.button {
+    -fx-text-fill: -fx-primarytext;
+    -fx-background-color: -fx-primary;
+    -fx-border-color: -fx-secondary;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-font-size: 12pt;
+    -fx-border-width: 2px;
+}
+
+.button:hover {
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px;
+}
+
+.text-field {
+    -fx-font-size: 11pt;
+    -fx-text-fill: derive(-fx-secondary, 20%);
+    -jfx-unfocus-color: derive(-fx-primarytext, 20%);
+    -fx-prompt-text-fill: derive(-fx-primarytext, 20%);
+    -jfx-focus-color: -fx-secondary;
+    /*-fx-font-weight: 800;*/
+}
+
+.text-field > .text{
+    -fx-background-color: red;
+    -fx-text-fill: red;
+}
+
+/*login screen*/
+#login > .text-field > .input-line {
+    -fx-pref-height:1.5;
+    -fx-background-radius: 10px;
+}
+
+#login > .text-field > .input-focused-line {
+    -fx-pref-height:3;
+    -fx-background-radius: 20px;
+}
+
+#login > .button.login, #login > .text-field.login {
+    -fx-font-size: 13pt;
+}
+
+#login > .button:hover, #login > .button:focused {
+    -fx-text-fill: -fx-primary;
+    -fx-background-color: -fx-secondary;
+    -fx-border-color: -fx-secondary;
+}
+
+#login > .wrong-credentials {
+    -jfx-unfocus-color: #ef5350;
+    -fx-prompt-text-fill: #ef5350;
+}
+
+/*app-window*/
+
+.jfx-date-picker > .jfx-text-field {
+    -jfx-label-float: true;
+}
+
+.jfx-time-picker > .jfx-text-field {
+    -jfx-label-float: true;
+}

@@ -1,10 +1,13 @@
-package ui;
+package ui.console;
 
+import domain.BookedTripDTO;
+import domain.TripDTO;
 import domain.User;
 import service.AppService;
 import service.AppServiceException;
-import service.UserService;
+import service.LoginService;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -13,12 +16,12 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class UI {
-    private UserService userService;
+    private LoginService loginService;
     private AppService appService;
 
-    public UI(UserService userService, AppService appService) {
+    public UI(LoginService loginService, AppService appService) {
 
-        this.userService = userService;
+        this.loginService = loginService;
         this.appService = appService;
     }
 
@@ -39,7 +42,7 @@ public class UI {
         System.out.println("Type your credentials.");
         String username = input("Username:");
         String password = input("Password:");
-        return userService.login(username, password);
+        return loginService.login(username, password);
     }
 
     private Map<String, Runnable> getCommands() {
@@ -84,7 +87,7 @@ public class UI {
             System.out.println("Wrong date format");
         }
         if (departure != null)
-            for(var a : appService.search(destinationName, departure))
+            for(BookedTripDTO a : appService.search(destinationName, Timestamp.valueOf(departure)))
                 System.out.println(a.toString());
     }
 
@@ -102,7 +105,7 @@ public class UI {
     }
 
     private void showTrips() {
-        for(var a:appService.showTrips())
+        for(TripDTO a:appService.showTrips())
             System.out.println(a);
     }
 }

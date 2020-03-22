@@ -3,10 +3,10 @@ package service;
 import domain.User;
 import repository.UserDatabaseRepository;
 
-public class UserService {
+public class LoginService {
     UserDatabaseRepository users;
 
-    public UserService(UserDatabaseRepository users) {
+    public LoginService(UserDatabaseRepository users) {
         this.users = users;
     }
 

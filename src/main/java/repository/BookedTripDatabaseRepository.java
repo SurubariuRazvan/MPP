@@ -4,16 +4,18 @@ import domain.BookedTrip;
 import domain.BookedTripDTO;
 import domain.BookedTripID;
 import validation.CRUDValidator;
-import validation.ValidationException;
 
-import java.sql.*;
-import java.time.LocalDateTime;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 public class BookedTripDatabaseRepository extends AbstractDatabaseRepository<BookedTripID, BookedTrip> {
-    public BookedTripDatabaseRepository(CRUDValidator<BookedTrip> validator, Connection c) {
-        super(validator, c, BookedTrip.class);
+    public BookedTripDatabaseRepository(CRUDValidator<BookedTrip> validator, Properties props) {
+        super(validator, props, BookedTrip.class);
     }
 
     @Override
@@ -55,11 +57,11 @@ public class BookedTripDatabaseRepository extends AbstractDatabaseRepository<Boo
                 + " where \"tripID\" = " + entity.getTripID() + " and \"seatNumber\" = " + entity.getSeatNumber() + ";";
     }
 
-    public List<BookedTripDTO> search(String destinationName, LocalDateTime departure) {
+    public List<BookedTripDTO> search(String destinationName, Timestamp departure) {
         List<BookedTripDTO> entities = new ArrayList<>();
         try {
-            Statement stmt = c.createStatement();
-            var f = stmt.executeQuery(findByDestinationAndDeparture(destinationName, departure));
+            Statement stmt = dbUtils.getConnection().createStatement();
+            ResultSet f = stmt.executeQuery(findByDestinationAndDeparture(destinationName, departure));
             while(f.next())
                 entities.add(readDTO(f));
             f.close();
@@ -77,7 +79,7 @@ public class BookedTripDatabaseRepository extends AbstractDatabaseRepository<Boo
         return new BookedTripDTO(clientID, clientName, seatNumber);
     }
 
-    private String findByDestinationAndDeparture(String destinationName, LocalDateTime departure) {
+    private String findByDestinationAndDeparture(String destinationName, Timestamp departure) {
         return "SELECT \"Client\".\"id\", \"Client\".\"name\", \"BookedTrip\".\"seatNumber\" "
                 + "from \"BookedTrip\" inner join \"Client\" on \"BookedTrip\".\"clientID\" = \"Client\".\"id\" "
                 + "inner join \"Trip\" on \"BookedTrip\".\"tripID\" = \"Trip\".\"id\" "

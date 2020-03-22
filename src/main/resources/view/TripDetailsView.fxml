@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TripDetailsController">
+    <TableView fx:id="bookedTripDTOTable" prefHeight="200.0" prefWidth="200.0">
+        <columns>
+            <TableColumn fx:id="tableSeatNumber" prefWidth="111.0" text="Seat Number" />
+            <TableColumn fx:id="tableName" prefWidth="188.0" text="Name" />
+        </columns>
+    </TableView>
+</StackPane>

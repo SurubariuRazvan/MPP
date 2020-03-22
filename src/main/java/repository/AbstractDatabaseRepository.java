@@ -6,24 +6,24 @@ import org.apache.logging.log4j.Logger;
 import validation.CRUDValidator;
 import validation.ValidationException;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 public abstract class AbstractDatabaseRepository<ID, E extends Entity<ID>> implements CRUDRepository<ID, E> {
 
-    protected final Connection c;
-    protected final CRUDValidator<E> validator;
     protected static final Logger logger = LogManager.getLogger();
+    protected final CRUDValidator<E> validator;
     protected final Class<E> entityType;
+    protected JdbcUtils dbUtils;
 
-    AbstractDatabaseRepository(CRUDValidator<E> validator, Connection c, Class<E> entityType) {
+    AbstractDatabaseRepository(CRUDValidator<E> validator, Properties props, Class<E> entityType) {
         this.validator = validator;
-        this.c = c;
         this.entityType = entityType;
+        this.dbUtils = new JdbcUtils(props);
     }
 
     /**
@@ -40,8 +40,8 @@ public abstract class AbstractDatabaseRepository<ID, E extends Entity<ID>> imple
         logger.info("Find one " + entityType.getName() + " " + id);
         E entity = null;
         try {
-            Statement stmt = c.createStatement();
-            var f = stmt.executeQuery(findOneString(id));
+            Statement stmt = dbUtils.getConnection().createStatement();
+            ResultSet f = stmt.executeQuery(findOneString(id));
             if (f.next())
                 entity = readEntity(f);
             f.close();
@@ -63,8 +63,8 @@ public abstract class AbstractDatabaseRepository<ID, E extends Entity<ID>> imple
         logger.info("Find all " + entityType.getName());
         List<E> entities = new ArrayList<>();
         try {
-            Statement stmt = c.createStatement();
-            var f = stmt.executeQuery(findAllString());
+            Statement stmt = dbUtils.getConnection().createStatement();
+            ResultSet f = stmt.executeQuery(findAllString());
             while(f.next())
                 entities.add(readEntity(f));
             f.close();
@@ -87,7 +87,8 @@ public abstract class AbstractDatabaseRepository<ID, E extends Entity<ID>> imple
         logger.info("Save " + entityType.getName() + " " + entity.getId());
         validator.validate(entity);
         try {
-            Statement stmt = c.createStatement();
+            Statement stmt = dbUtils.getConnection().createStatement();
+            var a = insertString(entity);
             stmt.executeUpdate(insertString(entity));
             stmt.close();
         } catch (SQLException e) {
@@ -110,7 +111,7 @@ public abstract class AbstractDatabaseRepository<ID, E extends Entity<ID>> imple
             throw new IllegalArgumentException("id is null");
         logger.info("Delete " + entityType.getName() + " " + id);
         try {
-            Statement stmt = c.createStatement();
+            Statement stmt = dbUtils.getConnection().createStatement();
             E entity = this.findOne(id);
             if (entity != null) {
                 stmt.executeUpdate(deleteString(id));
@@ -139,7 +140,7 @@ public abstract class AbstractDatabaseRepository<ID, E extends Entity<ID>> imple
         logger.info("Update " + entityType.getName() + " with id:" + entity.getId() + " with:" + entity.toString());
         validator.validate(entity);
         try {
-            Statement stmt = c.createStatement();
+            Statement stmt = dbUtils.getConnection().createStatement();
             int action = stmt.executeUpdate(updateString(entity));
             stmt.close();
             if (action == 0)

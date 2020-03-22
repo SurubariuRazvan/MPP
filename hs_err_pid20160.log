@@ -562,7 +562,7 @@ Deoptimization events (20 events):
 Event: 2362.547 Thread 0x000001c9c394d000 DEOPT PACKING pc=0x000001c9b446f114 sp=0x000000b2522f7cc0
 Event: 2362.547 Thread 0x000001c9c394d000 DEOPT UNPACKING pc=0x000001c9ac6f922f sp=0x000000b2522f7b48 mode 2
 Event: 2362.547 Thread 0x000001c9c394d000 Uncommon trap: trap_request=0xffffffde fr.pc=0x000001c9b446f114 relative=0x0000000000004c94
-Event: 2362.547 Thread 0x000001c9c394d000 Uncommon trap: reason=class_check action=maybe_recompile pc=0x000001c9b446f114 method=com.sun.tools.javac.code.Symtab.lookupPackage(Lcom/sun/tools/javac/code/Symbol$ModuleSymbol;Lcom/sun/tools/javac/util/Name;)Lcom/sun/tools/javac/code/Symbol$PackageSymbo
+Event: 2362.547 Thread 0x000001c9c394d000 Uncommon trap: reason=class_check action=maybe_recompile pc=0x000001c9b446f114 method=com.sun.tools.javadbUtils.getConnection().code.Symtab.lookupPackage(Lcom/sun/tools/javac/code/Symbol$ModuleSymbol;Lcom/sun/tools/javac/util/Name;)Lcom/sun/tools/javac/code/Symbol$PackageSymbo
 Event: 2362.547 Thread 0x000001c9c394d000 DEOPT PACKING pc=0x000001c9b446f114 sp=0x000000b2522f7cc0
 Event: 2362.547 Thread 0x000001c9c394d000 DEOPT UNPACKING pc=0x000001c9ac6f922f sp=0x000000b2522f7b48 mode 2
 Event: 2362.590 Thread 0x000001c9c394d000 DEOPT PACKING pc=0x000001c9acdaf841 sp=0x000000b2522fa630
@@ -670,7 +670,7 @@ Dynamic libraries:
 0x00007ffd8d700000 - 0x00007ffd8de7f000 	C:\WINDOWS\System32\windows.storage.dll
 0x00007ffd8d110000 - 0x00007ffd8d12f000 	C:\WINDOWS\System32\profapi.dll
 0x00007ffd8d080000 - 0x00007ffd8d0ca000 	C:\WINDOWS\System32\powrprof.dll
-0x00007ffd8d070000 - 0x00007ffd8d080000 	C:\WINDOWS\System32\UMPDC.dll
+0x00007ffd8d070000 - 0x00007ffd8d080000 	C:\WINDOWS\System32\UMPDdbUtils.getConnection().dll
 0x00007ffd8fbb0000 - 0x00007ffd8fc02000 	C:\WINDOWS\System32\shlwapi.dll
 0x00007ffd8d4e0000 - 0x00007ffd8d4f7000 	C:\WINDOWS\System32\cryptsp.dll
 0x00007ffd528c0000 - 0x00007ffd528da000 	G:\IntelliJ IDEA 2019.3.3\jbr\bin\net.dll
@@ -687,7 +687,7 @@ Dynamic libraries:
 0x00007ffd8c5f0000 - 0x00007ffd8c62a000 	C:\WINDOWS\SYSTEM32\IPHLPAPI.DLL
 0x00007ffd8ef10000 - 0x00007ffd8ef18000 	C:\WINDOWS\System32\NSI.dll
 0x00007ffd87b40000 - 0x00007ffd87b56000 	C:\WINDOWS\SYSTEM32\dhcpcsvc6.DLL
-0x00007ffd87a40000 - 0x00007ffd87a5c000 	C:\WINDOWS\SYSTEM32\dhcpcsvc.DLL
+0x00007ffd87a40000 - 0x00007ffd87a5c000 	C:\WINDOWS\SYSTEM32\dhcpcsvdbUtils.getConnection().DLL
 0x00007ffd8c630000 - 0x00007ffd8c6fa000 	C:\WINDOWS\SYSTEM32\DNSAPI.dll
 
 dbghelp: loaded successfully - version: 4.0.5 - missing functions: none

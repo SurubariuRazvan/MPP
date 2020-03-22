@@ -4,21 +4,24 @@ import domain.Trip;
 import domain.TripDTO;
 import validation.CRUDValidator;
 
-import java.sql.*;
-import java.time.LocalDateTime;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 public class TripDatabaseRepository extends AbstractDatabaseRepository<Integer, Trip> {
-    public TripDatabaseRepository(CRUDValidator<Trip> validator, Connection c) {
-        super(validator, c, Trip.class);
+    public TripDatabaseRepository(CRUDValidator<Trip> validator, Properties props) {
+        super(validator, props, Trip.class);
     }
 
     @Override
     protected Trip readEntity(ResultSet result) throws SQLException {
         int id = result.getInt("id");
         int destinationID = result.getInt("destinationID");
-        Date departure = result.getDate("departure");
+        Timestamp departure = result.getTimestamp("departure");
         int freeSeats = result.getInt("freeSeats");
         return new Trip(id, destinationID, departure, freeSeats);
     }
@@ -37,8 +40,8 @@ public class TripDatabaseRepository extends AbstractDatabaseRepository<Integer, 
     protected String insertString(Trip entity) {
         return "INSERT INTO \"Trip\" (\"destinationID\", \"departure\", \"freeSeats\") " +
                 "VALUES (" + entity.getDestinationID()
-                + "," + entity.getDeparture()
-                + "," + entity.getFreeSeats()
+                + ",'" + entity.getDeparture()
+                + "'," + entity.getFreeSeats()
                 + ");";
     }
 
@@ -59,8 +62,8 @@ public class TripDatabaseRepository extends AbstractDatabaseRepository<Integer, 
     public List<TripDTO> getAllTrips() {
         List<TripDTO> entities = new ArrayList<>();
         try {
-            Statement stmt = c.createStatement();
-            var f = stmt.executeQuery(getAllTripsString());
+            Statement stmt = dbUtils.getConnection().createStatement();
+            ResultSet f = stmt.executeQuery(getAllTripsString());
             while(f.next())
                 entities.add(readDTO(f));
             f.close();
@@ -73,12 +76,12 @@ public class TripDatabaseRepository extends AbstractDatabaseRepository<Integer, 
 
     private String getAllTripsString() {
         return "SELECT \"name\", \"departure\", \"freeSeats\"" +
-                "FROM \"Trip\" inner join \"Destination\" on \"Trip\".\"id\"=\"Destination\".\"id\"";
+                "FROM \"Trip\" inner join \"Destination\" on \"Trip\".\"destinationID\"=\"Destination\".\"id\"";
     }
 
     private TripDTO readDTO(ResultSet result) throws SQLException {
         String destinationName = result.getString("name");
-        LocalDateTime departure = result.getTimestamp("departure").toLocalDateTime();
+        Timestamp departure = result.getTimestamp("departure");
         int freeSeats = result.getInt("freeSeats");
         return new TripDTO(destinationName, departure, freeSeats);
     }

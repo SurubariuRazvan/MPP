@@ -1,14 +1,16 @@
 package domain;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
 
 public class Trip extends Entity<Integer> {
     int destinationID;
-    Date departure;
+    Timestamp departure;
     int freeSeats;
 
-    public Trip(Integer id, Integer destinationID, Date departure, int freeSeats) {
+    public Trip(Integer id, Integer destinationID, Timestamp departure, int freeSeats) {
         super(id);
         this.destinationID = destinationID;
         this.departure = departure;
@@ -23,11 +25,11 @@ public class Trip extends Entity<Integer> {
         this.destinationID = destinationID;
     }
 
-    public Date getDeparture() {
+    public Timestamp getDeparture() {
         return departure;
     }
 
-    public void setDeparture(Date departure) {
+    public void setDeparture(Timestamp departure) {
         this.departure = departure;
     }
 

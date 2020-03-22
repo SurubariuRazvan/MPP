@@ -6774,7 +6774,7 @@ instanceKlass java/lang/Void
 instanceKlass java/lang/invoke/MethodType$ConcurrentWeakInternSet
 instanceKlass java/lang/invoke/MethodHandles$Lookup
 instanceKlass java/lang/invoke/LambdaMetafactory
-instanceKlass java/lang/ModuleLayer$Controller
+instanceKlass java/lang/ModuleLayer$controller
 instanceKlass java/util/HashMap$HashIterator
 instanceKlass jdk/internal/module/ServicesCatalog$ServiceProvider
 instanceKlass java/util/concurrent/CopyOnWriteArrayList

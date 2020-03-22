@@ -5,24 +5,17 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import validation.ClientValidator;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 class ClientDatabaseRepositoryTest {
-    static ClientDatabaseRepository clientDatabaseRepository;
     private static final Logger logger = LogManager.getLogger();
+    static ClientDatabaseRepository clientDatabaseRepository;
 
     @BeforeAll
-    static void getConnection() throws SQLException {
-        Connection c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/MPP-app", "postgres", "793582");
-        if (c.isClosed())
-            logger.error("Connection failed");
-        else
-            logger.info("Connected");
-        clientDatabaseRepository = new ClientDatabaseRepository(new ClientValidator(), c);
+    static void getConnection() {
+        ApplicationContext context = new ClassPathXmlApplicationContext("App.xml");
+        clientDatabaseRepository = context.getBean(ClientDatabaseRepository.class);
         logger.info("Repository created");
     }
 
@@ -39,7 +32,7 @@ class ClientDatabaseRepositoryTest {
     @Test
     void findAllString() {
         clientDatabaseRepository.findAll();
-        for (Client client : clientDatabaseRepository.findAll())
+        for(Client client : clientDatabaseRepository.findAll())
             System.out.println(client);
     }
 

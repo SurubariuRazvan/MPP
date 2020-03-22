@@ -6,6 +6,7 @@ import repository.ClientDatabaseRepository;
 import repository.DestinationDatabaseRepository;
 import repository.TripDatabaseRepository;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class AppService {
     }
 
 
-    public List<BookedTripDTO> search(String destinationName, LocalDateTime departure) {
+    public List<BookedTripDTO> search(String destinationName, Timestamp departure) {
         return bookedTripRepo.search(destinationName, departure);
     }
 
@@ -49,5 +50,9 @@ public class AppService {
 
     public List<TripDTO> showTrips() {
         return tripRepo.getAllTrips();
+    }
+
+    public void addTripDTO() {
+        tripRepo.save(new Trip(20, 2, Timestamp.valueOf(LocalDateTime.now()), 12));
     }
 }

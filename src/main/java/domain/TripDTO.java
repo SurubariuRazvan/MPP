@@ -1,15 +1,16 @@
 package domain;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
 
 public class TripDTO{
     String destinationName;
-    LocalDateTime departure;
+    Timestamp departure;
     int freeSeats;
 
-    public TripDTO(String destinationName, LocalDateTime departure, int freeSeats) {
+    public TripDTO(String destinationName, Timestamp departure, int freeSeats) {
         this.destinationName = destinationName;
         this.departure = departure;
         this.freeSeats = freeSeats;
@@ -23,11 +24,11 @@ public class TripDTO{
         this.destinationName = destinationName;
     }
 
-    public LocalDateTime getDeparture() {
+    public Timestamp getDeparture() {
         return departure;
     }
 
-    public void setDeparture(LocalDateTime departure) {
+    public void setDeparture(Timestamp departure) {
         this.departure = departure;
     }
 

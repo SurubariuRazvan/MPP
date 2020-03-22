@@ -6,10 +6,11 @@ import validation.CRUDValidator;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class DestinationDatabaseRepository extends AbstractDatabaseRepository<Integer, Destination> {
-    public DestinationDatabaseRepository(CRUDValidator<Destination> validator, Connection c) {
-        super(validator, c, Destination.class);
+    public DestinationDatabaseRepository(CRUDValidator<Destination> validator, Properties props) {
+        super(validator, props, Destination.class);
     }
 
     @Override
