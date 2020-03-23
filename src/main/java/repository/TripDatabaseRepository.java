@@ -85,4 +85,24 @@ public class TripDatabaseRepository extends AbstractDatabaseRepository<Integer, 
         int freeSeats = result.getInt("freeSeats");
         return new TripDTO(destinationName, departure, freeSeats);
     }
+
+    public Integer getTripIDByDestinationAndDeparture(String destinationName, Timestamp departure) {
+        try {
+            Statement stmt = dbUtils.getConnection().createStatement();
+            ResultSet f = stmt.executeQuery(getTripByDestinationAndDeparture(destinationName, departure));
+            if (f.next())
+                return f.getInt("id");
+            f.close();
+            stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private String getTripByDestinationAndDeparture(String destinationName, Timestamp departure) {
+        return "SELECT \"Trip\".\"id\" as \"id\""
+                + "from \"Trip\" inner join \"Destination\" on \"Trip\".\"destinationID\"=\"Destination\".\"id\" "
+                + "where \"Destination\".\"name\" = '" + destinationName + "' and \"Trip\".\"departure\" = '" + departure + "';";
+    }
 }

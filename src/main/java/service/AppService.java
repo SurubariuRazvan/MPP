@@ -55,4 +55,8 @@ public class AppService {
     public void addTripDTO() {
         tripRepo.save(new Trip(20, 2, Timestamp.valueOf(LocalDateTime.now()), 12));
     }
+
+    public Integer getTripIDByDestinationAndDeparture(String destination, Timestamp departure) {
+        return tripRepo.getTripIDByDestinationAndDeparture(destination, departure);
+    }
 }

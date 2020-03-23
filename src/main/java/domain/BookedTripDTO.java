@@ -1,6 +1,6 @@
 package domain;
 
-public class BookedTripDTO{
+public class BookedTripDTO {
     private int clientID;
     private String clientName;
     private int seatNumber;
