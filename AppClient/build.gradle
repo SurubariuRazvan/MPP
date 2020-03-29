@@ -1,0 +1,47 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.8'
+}
+version '1.0-SNAPSHOT'
+
+mainClassName = 'app.Main'
+sourceCompatibility = 1.11
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile project (':Domain')
+
+
+    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.4.2'
+    compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1'
+    testImplementation('org.junit.jupiter:junit-jupiter-api:5.4.2')
+    testRuntime('org.junit.jupiter:junit-jupiter-engine:5.4.2')
+    compile group: 'org.postgresql', name: 'postgresql', version: '42.2.8'
+    compile 'org.apache.logging.log4j:log4j-api:2.13.0'
+    compile 'org.apache.logging.log4j:log4j-core:2.13.0'
+    compile group: 'com.itextpdf', name: 'itextpdf', version: '5.0.6'
+    compile group: 'com.jfoenix', name: 'jfoenix', version: '9.0.8'
+    compile group: 'de.jensd', name: 'fontawesomefx-commons', version: '9.1.2'
+    compile 'de.jensd:fontawesomefx-fontawesome:4.7.0-9.1.2'
+    compile 'de.jensd:fontawesomefx-materialdesignfont:2.0.26-9.1.2'
+    compile 'de.jensd:fontawesomefx-materialicons:2.2.0-9.1.2'
+
+    compile 'org.springframework:spring-core:4.3.26.RELEASE'
+    compile 'org.springframework:spring-context:4.3.26.RELEASE'
+    compile 'org.springframework:spring-beans:4.3.26.RELEASE'
+    compile 'org.springframework:spring-jdbc:4.3.26.RELEASE'
+
+}
+
+test {
+    useJUnitPlatform()
+}
+
+javafx {
+    version = "11.0.2"
+    modules = ['javafx.controls', 'javafx.fxml']
+}
