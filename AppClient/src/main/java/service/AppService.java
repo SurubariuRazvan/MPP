@@ -5,6 +5,7 @@ import repository.database.DatabaseBookedTripRepository;
 import repository.database.DatabaseClientRepository;
 import repository.database.DatabaseDestinationRepository;
 import repository.database.DatabaseTripRepository;
+import services.AppServiceException;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;

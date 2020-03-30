@@ -13,7 +13,10 @@ repositories {
 }
 
 dependencies {
-    compile project (':Domain')
+    compile project(':AppDomain')
+    compile project(':AppPersistence')
+    compile project(':AppServices')
+    compile project(':AppNetworking')
 
 
     testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.4.2'
@@ -34,7 +37,6 @@ dependencies {
     compile 'org.springframework:spring-context:4.3.26.RELEASE'
     compile 'org.springframework:spring-beans:4.3.26.RELEASE'
     compile 'org.springframework:spring-jdbc:4.3.26.RELEASE'
-
 }
 
 test {

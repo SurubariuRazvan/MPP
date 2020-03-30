@@ -4,11 +4,10 @@ import controller.LoginController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import service.LoginService;
+import network.rpcprotocol.AppProxyService;
+import services.IAppServices;
 
 public class Gui extends Application {
     public static void run(String[] args) {
@@ -20,12 +19,14 @@ public class Gui extends Application {
         primaryStage.setTitle("Application Login");
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/view/LoginView.fxml"));
-        HBox rootLayout = loader.load();
+        StackPane rootLayout = loader.load();
         LoginController loginController = loader.getController();
 
-        ApplicationContext context = new ClassPathXmlApplicationContext("App.xml");
-        LoginService loginService = context.getBean(LoginService.class);
-        loginController.setService(loginService);
+        String serverIP = "localhost";
+        int serverPort = 55555;
+
+        IAppServices server = new AppProxyService(serverIP, serverPort, loginController);
+        loginController.setService(server);
         loginController.setPrimaryStage(primaryStage);
 
         primaryStage.setOnCloseRequest(we -> loginController.close());

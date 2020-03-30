@@ -19,15 +19,17 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import service.AppService;
-import service.AppServiceException;
+import services.AppServiceException;
+import services.IAppObserver;
+import services.IAppServices;
 
 import java.net.URL;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Vector;
 
-public class TripDetailsController implements Initializable {
+public class TripDetailsController implements Initializable, IAppObserver {
     public TableView<BookedTripDTO> bookedTripDTOTable;
     public TableColumn<BookedTripDTO, String> tableName;
     public TableColumn<BookedTripDTO, Integer> tableSeatNumber;
@@ -36,9 +38,12 @@ public class TripDetailsController implements Initializable {
     public Spinner<Integer> addSeatNumber;
     public StackPane rootPane;
     public VBox menuTable;
-    private AppService appService;
+    private IAppServices appService;
+    private AppController appController;
     private User user;
     private int tripID;
+    private String destination;
+    private Timestamp departure;
     private ObservableList<BookedTripDTO> entities;
 
     @Override
@@ -57,25 +62,34 @@ public class TripDetailsController implements Initializable {
         });
     }
 
-    public void setService(AppService appService, Integer tripID, User user, List<BookedTripDTO> result) {
+    public void setService(IAppServices appService, AppController appController, Integer tripID, User user, String destination, Timestamp departure) {
         this.appService = appService;
+        this.appController = appController;
         this.user = user;
         this.tripID = tripID;
-        postInitialization(result);
+        this.destination = destination;
+        this.departure = departure;
+        postInitialization();
     }
 
 
-    private List<BookedTripDTO> createList(List<BookedTripDTO> result) {
+    private List<BookedTripDTO> createList() {
+        List<BookedTripDTO> result = null;
+        try {
+            result = appService.search(destination, departure);
+        } catch (AppServiceException e) {
+            e.printStackTrace();
+        }
         List<BookedTripDTO> temporary = new Vector<>(18);
         for(int i = 0; i < 18; i++)
             temporary.add(new BookedTripDTO(-1, "-", i + 1));
-        for(var a : result)
+        for(BookedTripDTO a : result)
             temporary.set(a.getSeatNumber() - 1, a);
         return temporary;
     }
 
-    private void postInitialization(List<BookedTripDTO> result) {
-        entities = FXCollections.observableList(createList(result));
+    private void postInitialization() {
+        entities = FXCollections.observableList(createList());
         bookedTripDTOTable.setItems(entities);
     }
 
@@ -100,9 +114,20 @@ public class TripDetailsController implements Initializable {
         String name = addName.getText();
         try {
             appService.reserve(tripID, name, seatNumber);
-            entities.set(seatNumber - 1, new BookedTripDTO(appService.findClientID(tripID, seatNumber).getClientID(), name, seatNumber));
         } catch (AppServiceException e) {
             showError("Reserving error", e.getMessage());
         }
+    }
+
+
+    @Override
+    public void updateWindows(String destinationName, Timestamp departure, int seatNumber, String clientName) {
+        System.out.println("tripController");
+        for(var e : entities)
+            if (e.getSeatNumber() == seatNumber) {
+                e.setClientName(clientName);
+                break;
+            }
+        bookedTripDTOTable.refresh();
     }
 }

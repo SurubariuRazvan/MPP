@@ -20,7 +20,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.converter.LocalTimeStringConverter;
-import service.AppService;
+import services.AppServiceException;
+import services.IAppObserver;
+import services.IAppServices;
+import services.LoginServiceException;
 
 import java.io.IOException;
 import java.net.URL;
@@ -33,7 +36,7 @@ import java.time.format.FormatStyle;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class AppController implements Initializable {
+public class AppController implements Initializable, IAppObserver {
 
     public TableView<TripDTO> tripDTOTable;
     public TableColumn<TripDTO, String> tableDestination;
@@ -46,8 +49,9 @@ public class AppController implements Initializable {
     public StackPane rootPane;
     public BorderPane menuTable;
     protected ObservableList<TripDTO> entities;
-    private AppService appService;
+    private IAppServices appService;
     private User user;
+    private TripDetailsController controller;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -56,33 +60,33 @@ public class AppController implements Initializable {
         tableFreeSeats.setCellValueFactory(new PropertyValueFactory<>("freeSeats"));
 
         tripDTOTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            searchByDestination.setText(newValue.getDestinationName());
-            Timestamp time = newValue.getDeparture();
-            searchByDate.setValue(time.toLocalDateTime().toLocalDate());
-            searchByTime.setValue(time.toLocalDateTime().toLocalTime());
+            if (newValue != null) {
+                searchByDestination.setText(newValue.getDestinationName());
+                Timestamp time = newValue.getDeparture();
+                searchByDate.setValue(time.toLocalDateTime().toLocalDate());
+                searchByTime.setValue(time.toLocalDateTime().toLocalTime());
+            }
+
         });
     }
 
-    public void setService(AppService appService, User user) {
+    public void setService(IAppServices appService, User user) {
         this.appService = appService;
         this.user = user;
         entities = FXCollections.emptyObservableList();
         searchByTime.setEditable(false);
         searchByTime.set24HourView(true);
         searchByTime.setConverter(new LocalTimeStringConverter(FormatStyle.SHORT, Locale.GERMANY));
-
         postInitialization();
     }
 
     private void postInitialization() {
-        entities = FXCollections.observableList(appService.showTrips());
+        try {
+            entities = FXCollections.observableList(appService.showTrips());
+        } catch (AppServiceException e) {
+            e.printStackTrace();
+        }
         tripDTOTable.setItems(entities);
-    }
-
-
-    public void addTripDTO() {
-        appService.addTripDTO();
-        entities.setAll(appService.showTrips());
     }
 
     protected void showError(String title, String message) {
@@ -101,7 +105,7 @@ public class AppController implements Initializable {
         dialog.setOnDialogClosed((JFXDialogEvent event) -> this.menuTable.setEffect(null));
     }
 
-    public void searchByDestinationAndDate() {
+    public void searchByDestinationAndDate() throws AppServiceException {
         String destination = searchByDestination.getText();
         LocalDate date = searchByDate.getValue();
         LocalTime time = searchByTime.getValue();
@@ -115,13 +119,12 @@ public class AppController implements Initializable {
         if (destination != null && date != null && time != null) {
             var tripID = appService.getTripIDByDestinationAndDeparture(destination, Timestamp.valueOf(LocalDateTime.of(date, time)));
             if (tripID != null) {
-                var result = appService.search(destination, Timestamp.valueOf(LocalDateTime.of(date, time)));
                 StackPane parent;
                 try {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TripDetailsView.fxml"));
                     parent = loader.load();
-                    TripDetailsController controller = loader.getController();
-                    controller.setService(appService, tripID, user, result);
+                    controller = loader.getController();
+                    controller.setService(appService, this, tripID, user, destination, Timestamp.valueOf(LocalDateTime.of(date, time)));
                     Stage stage = new Stage();
                     stage.setTitle("Trip details");
                     stage.setScene(new Scene(parent));
@@ -131,5 +134,26 @@ public class AppController implements Initializable {
                 }
             }
         }
+    }
+
+
+    public void logout() {
+        try {
+            appService.logout(user.getId());
+        } catch (LoginServiceException | AppServiceException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void updateWindows(String destinationName, Timestamp departure, int seatNumber, String clientName) {
+        System.out.println("AppController");
+        for(var e : entities)
+            if (e.getDeparture().equals(departure) && e.getDestinationName().equals(destinationName)) {
+                e.setFreeSeats(e.getFreeSeats() - 1);
+                break;
+            }
+        tripDTOTable.refresh();
+        controller.updateWindows(destinationName, departure, seatNumber, clientName);
     }
 }

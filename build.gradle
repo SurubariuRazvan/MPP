@@ -10,6 +10,5 @@ repositories {
 }
 
 dependencies {
-    compile project (':Domain')
 
 }

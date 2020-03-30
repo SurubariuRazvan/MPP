@@ -4,8 +4,8 @@ import domain.BookedTripDTO;
 import domain.TripDTO;
 import domain.User;
 import service.AppService;
-import service.AppServiceException;
 import service.LoginService;
+import services.AppServiceException;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
