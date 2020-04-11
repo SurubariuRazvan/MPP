@@ -10,7 +10,7 @@ import services.IAppServices;
 
 public class StartRpcServer {
     public static void main(String[] args) {
-        int chatServerPort = 55555;
+        int chatServerPort = 55556;
 
         ApplicationContext context = new ClassPathXmlApplicationContext("App.xml");
         UserRepository userRepo = context.getBean(DatabaseUserRepository.class);

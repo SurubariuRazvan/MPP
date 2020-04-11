@@ -154,6 +154,7 @@ public class AppController implements Initializable, IAppObserver {
                 break;
             }
         tripDTOTable.refresh();
-        controller.updateWindows(destinationName, departure, seatNumber, clientName);
+        if (controller != null && controller.departure.equals(departure) && controller.destination.equals(destinationName))
+            controller.updateWindows(destinationName, departure, seatNumber, clientName);
     }
 }

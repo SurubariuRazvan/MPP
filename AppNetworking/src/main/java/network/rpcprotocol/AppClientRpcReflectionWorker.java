@@ -146,7 +146,7 @@ public class AppClientRpcReflectionWorker implements Runnable, IAppObserver {
         NetTripDTO netTripDTO = (NetTripDTO) request.data();
         try {
             Integer id = server.getTripIDByDestinationAndDeparture(netTripDTO.getDestinationName(), netTripDTO.getDeparture());
-            return new Response.Builder().type(ResponseType.GET_BOOKED_TRIP).data(id).build();
+            return new Response.Builder().type(ResponseType.GET_BOOKED_TRIP_ID).data(id).build();
         } catch (AppServiceException e) {
             return new Response.Builder().type(ResponseType.ERROR).data(e.getMessage()).build();
         }

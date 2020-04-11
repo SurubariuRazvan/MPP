@@ -162,9 +162,8 @@ public class AppProxyService implements IAppServices {
             this.client = client;
             return (User) response.data();
         }
-        String err = response.data().toString();
         closeConnection();
-        throw new AppServiceException(err);
+        throw new AppServiceException(response.data().toString());
     }
 
     @Override
@@ -173,10 +172,8 @@ public class AppProxyService implements IAppServices {
         sendRequest(req);
         Response response = readResponse();
         closeConnection();
-        if (response.type() == ResponseType.ERROR) {
-            String err = response.data().toString();
-            throw new AppServiceException(err);
-        }
+        if (response.type() == ResponseType.ERROR)
+            throw new AppServiceException(response.data().toString());
     }
 
     private class ReaderThread implements Runnable {

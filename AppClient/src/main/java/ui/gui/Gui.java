@@ -23,7 +23,7 @@ public class Gui extends Application {
         LoginController loginController = loader.getController();
 
         String serverIP = "localhost";
-        int serverPort = 55555;
+        int serverPort = 55556;
 
         IAppServices server = new AppProxyService(serverIP, serverPort, loginController);
         loginController.setService(server);

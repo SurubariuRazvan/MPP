@@ -38,12 +38,12 @@ public class TripDetailsController implements Initializable, IAppObserver {
     public Spinner<Integer> addSeatNumber;
     public StackPane rootPane;
     public VBox menuTable;
+    public String destination;
+    public Timestamp departure;
     private IAppServices appService;
     private AppController appController;
     private User user;
     private int tripID;
-    private String destination;
-    private Timestamp departure;
     private ObservableList<BookedTripDTO> entities;
 
     @Override
