@@ -16,14 +16,16 @@ import javafx.stage.Stage;
 import services.AppServiceException;
 import services.IAppObserver;
 import services.IAppServices;
-import services.LoginServiceException;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.URL;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.sql.Timestamp;
 import java.util.ResourceBundle;
 
-public class LoginController implements Initializable, IAppObserver {
+public class LoginController extends UnicastRemoteObject implements Initializable, IAppObserver, Serializable {
 
     public JFXTextField logInUsername;
     public JFXPasswordField logInPassword;
@@ -33,6 +35,9 @@ public class LoginController implements Initializable, IAppObserver {
     private IAppServices loginService;
     private Stage primaryStage;
     private AppController appController;
+
+    public LoginController() throws RemoteException {
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -70,7 +75,7 @@ public class LoginController implements Initializable, IAppObserver {
         User user = null;
         try {
             user = loginService.login(username, rawPassword, this);
-        } catch (LoginServiceException | AppServiceException e) {
+        } catch (AppServiceException e) {
             showError("Login error", e.getMessage());
         }
         if (user == null)

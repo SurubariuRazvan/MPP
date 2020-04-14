@@ -1,6 +1,0 @@
-package network.rpcprotocol;
-
-
-public enum ResponseType {
-    OK, ERROR, LOGOUT, GET_USER, RESERVED, NO_MATCH, GET_BOOKED_TRIPS, GET_BOOKED_TRIP, RESERVE_SEAT, GET_TRIPS, GET_BOOKED_TRIP_ID
-}

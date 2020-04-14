@@ -15,12 +15,11 @@ dependencies {
     compile project (':AppDomain')
     compile project (':AppPersistence')
     compile project (':AppServices')
-    compile project (':AppNetworking')
     compile project (':AppClient')
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
-    compile 'org.springframework:spring-core:4.3.26.RELEASE'
-    compile 'org.springframework:spring-context:4.3.26.RELEASE'
-    compile 'org.springframework:spring-beans:4.3.26.RELEASE'
-    compile 'org.springframework:spring-jdbc:4.3.26.RELEASE'
+    compile 'org.springframework:spring-core:5.0.4.RELEASE'
+    compile 'org.springframework:spring-context:5.0.4.RELEASE'
+    compile 'org.springframework:spring-beans:5.0.4.RELEASE'
+    compile 'org.springframework:spring-jdbc:5.0.4.RELEASE'
 }

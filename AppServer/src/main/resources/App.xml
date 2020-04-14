@@ -38,17 +38,4 @@
         <constructor-arg ref="appProps"/>
     </bean>
 
-
-    <bean id="loginService" class="service.LoginService">
-        <constructor-arg ref="userRepo"/>
-    </bean>
-
-    <bean id="appService" class="service.AppService">
-        <constructor-arg ref="bookedTripRepo"/>
-        <constructor-arg ref="clientRepo"/>
-        <constructor-arg ref="destinationRepo"/>
-        <constructor-arg ref="tripRepo"/>
-    </bean>
-
-
 </beans>

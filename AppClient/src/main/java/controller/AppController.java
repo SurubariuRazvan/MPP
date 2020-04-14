@@ -23,10 +23,10 @@ import javafx.util.converter.LocalTimeStringConverter;
 import services.AppServiceException;
 import services.IAppObserver;
 import services.IAppServices;
-import services.LoginServiceException;
 
 import java.io.IOException;
 import java.net.URL;
+import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -83,7 +83,7 @@ public class AppController implements Initializable, IAppObserver {
     private void postInitialization() {
         try {
             entities = FXCollections.observableList(appService.showTrips());
-        } catch (AppServiceException e) {
+        } catch (AppServiceException | RemoteException e) {
             e.printStackTrace();
         }
         tripDTOTable.setItems(entities);
@@ -105,7 +105,7 @@ public class AppController implements Initializable, IAppObserver {
         dialog.setOnDialogClosed((JFXDialogEvent event) -> this.menuTable.setEffect(null));
     }
 
-    public void searchByDestinationAndDate() throws AppServiceException {
+    public void searchByDestinationAndDate() throws AppServiceException, RemoteException {
         String destination = searchByDestination.getText();
         LocalDate date = searchByDate.getValue();
         LocalTime time = searchByTime.getValue();
@@ -140,7 +140,7 @@ public class AppController implements Initializable, IAppObserver {
     public void logout() {
         try {
             appService.logout(user.getId());
-        } catch (LoginServiceException | AppServiceException e) {
+        } catch (AppServiceException e) {
             e.printStackTrace();
         }
     }

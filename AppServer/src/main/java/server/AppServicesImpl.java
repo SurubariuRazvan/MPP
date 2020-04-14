@@ -5,8 +5,8 @@ import repository.*;
 import services.AppServiceException;
 import services.IAppObserver;
 import services.IAppServices;
-import services.LoginServiceException;
 
+import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +38,7 @@ public class AppServicesImpl implements IAppServices {
 
 
     @Override
-    public synchronized User login(String username, String password, IAppObserver client) throws LoginServiceException, AppServiceException {
+    public synchronized User login(String username, String password, IAppObserver client) throws AppServiceException {
         User user = userRepo.findByUsername(username);
         if (user == null)
             return null;
@@ -52,7 +52,7 @@ public class AppServicesImpl implements IAppServices {
     }
 
     @Override
-    public void logout(Integer userID) throws LoginServiceException, AppServiceException {
+    public synchronized void logout(Integer userID) throws AppServiceException {
         if (loggedUsers.containsKey(userID))
             loggedUsers.remove(userID);
         else
@@ -98,7 +98,11 @@ public class AppServicesImpl implements IAppServices {
         for(IAppObserver appObserver : loggedUsers.values())
             if (appObserver != null)
                 executor.execute(() -> {
-                    appObserver.updateWindows(destinationName, departure, seatNumber, clientName);
+                    try {
+                        appObserver.updateWindows(destinationName, departure, seatNumber, clientName);
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
                 });
 
         executor.shutdown();

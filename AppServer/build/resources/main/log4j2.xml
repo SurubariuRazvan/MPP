@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Configuration status="all">
+<Configuration status="INFO">
     <Properties>
         <Property name="layout">%d [%t] %-5level %logger - %m%n</Property>
     </Properties>
@@ -9,7 +9,7 @@
         </Console>
     </Appenders>
     <Loggers>
-        <Root level="all">
+        <Root level="INFO">
             <AppenderRef ref="Console"/>
         </Root>
     </Loggers>
