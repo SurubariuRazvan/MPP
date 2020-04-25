@@ -26,7 +26,6 @@ import services.IAppServices;
 
 import java.io.IOException;
 import java.net.URL;
-import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -51,7 +50,7 @@ public class AppController implements Initializable, IAppObserver {
     protected ObservableList<TripDTO> entities;
     private IAppServices appService;
     private User user;
-    private TripDetailsController controller;
+    public TripDetailsController controller;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -83,7 +82,7 @@ public class AppController implements Initializable, IAppObserver {
     private void postInitialization() {
         try {
             entities = FXCollections.observableList(appService.showTrips());
-        } catch (AppServiceException | RemoteException e) {
+        } catch (AppServiceException e) {
             e.printStackTrace();
         }
         tripDTOTable.setItems(entities);
@@ -105,7 +104,7 @@ public class AppController implements Initializable, IAppObserver {
         dialog.setOnDialogClosed((JFXDialogEvent event) -> this.menuTable.setEffect(null));
     }
 
-    public void searchByDestinationAndDate() throws AppServiceException, RemoteException {
+    public void searchByDestinationAndDate() throws AppServiceException {
         String destination = searchByDestination.getText();
         LocalDate date = searchByDate.getValue();
         LocalTime time = searchByTime.getValue();
@@ -116,24 +115,32 @@ public class AppController implements Initializable, IAppObserver {
         if (time == null)
             showError("Unfilled field", "select a time");
 
-        if (destination != null && date != null && time != null) {
-            var tripID = appService.getTripIDByDestinationAndDeparture(destination, Timestamp.valueOf(LocalDateTime.of(date, time)));
-            if (tripID != null) {
-                StackPane parent;
-                try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TripDetailsView.fxml"));
-                    parent = loader.load();
-                    controller = loader.getController();
-                    controller.setService(appService, this, tripID, user, destination, Timestamp.valueOf(LocalDateTime.of(date, time)));
-                    Stage stage = new Stage();
-                    stage.setTitle("Trip details");
-                    stage.setScene(new Scene(parent));
-                    stage.show();
-                } catch (IOException e) {
-                    e.printStackTrace();
+
+        if (controller == null || !controller.opened)
+            if (destination != null && date != null && time != null) {
+                var tripID = appService.getTripIDByDestinationAndDeparture(destination, Timestamp.valueOf(LocalDateTime.of(date, time)));
+                if (tripID != null) {
+                    StackPane parent;
+                    try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TripDetailsView.fxml"));
+                        parent = loader.load();
+                        controller = loader.getController();
+                        controller.setService(appService, this, tripID, user, destination, Timestamp.valueOf(LocalDateTime.of(date, time)));
+                        Stage stage = new Stage();
+                        stage.setTitle("Trip details");
+                        stage.setScene(new Scene(parent));
+
+
+                        stage.setOnCloseRequest(event -> {
+                            controller.opened = false;
+                        });
+
+                        stage.show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
-        }
     }
 
 
@@ -148,13 +155,13 @@ public class AppController implements Initializable, IAppObserver {
     @Override
     public void updateWindows(String destinationName, Timestamp departure, int seatNumber, String clientName) {
         System.out.println("AppController");
-        for(var e : entities)
+        for (var e : entities)
             if (e.getDeparture().equals(departure) && e.getDestinationName().equals(destinationName)) {
                 e.setFreeSeats(e.getFreeSeats() - 1);
                 break;
             }
         tripDTOTable.refresh();
-        if (controller != null && controller.departure.equals(departure) && controller.destination.equals(destinationName))
+        if (controller != null && controller.opened && controller.departure.equals(departure) && controller.destination.equals(destinationName))
             controller.updateWindows(destinationName, departure, seatNumber, clientName);
     }
 }

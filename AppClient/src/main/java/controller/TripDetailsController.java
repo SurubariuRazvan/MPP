@@ -7,6 +7,7 @@ import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.events.JFXDialogEvent;
 import domain.BookedTripDTO;
 import domain.User;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
@@ -45,6 +46,7 @@ public class TripDetailsController implements Initializable, IAppObserver {
     private User user;
     private int tripID;
     private ObservableList<BookedTripDTO> entities;
+    public boolean opened;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -60,6 +62,8 @@ public class TripDetailsController implements Initializable, IAppObserver {
                     addSeatNumber.getEditor().textProperty().set("1");
                 }
         });
+
+        opened = true;
     }
 
     public void setService(IAppServices appService, AppController appController, Integer tripID, User user, String destination, Timestamp departure) {
@@ -81,9 +85,9 @@ public class TripDetailsController implements Initializable, IAppObserver {
             e.printStackTrace();
         }
         List<BookedTripDTO> temporary = new Vector<>(18);
-        for(int i = 0; i < 18; i++)
+        for (int i = 0; i < 18; i++)
             temporary.add(new BookedTripDTO(-1, "-", i + 1));
-        for(BookedTripDTO a : result)
+        for (BookedTripDTO a : result)
             temporary.set(a.getSeatNumber() - 1, a);
         return temporary;
     }
@@ -93,20 +97,22 @@ public class TripDetailsController implements Initializable, IAppObserver {
         bookedTripDTOTable.setItems(entities);
     }
 
-    protected void showError(String title, String message) {
-        JFXDialogLayout dialogLayout = new JFXDialogLayout();
-        JFXButton button = new JFXButton("OK");
-        JFXDialog dialog = new JFXDialog(this.rootPane, dialogLayout, JFXDialog.DialogTransition.TOP);
-        button.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> dialog.close());
+    public void showError(String title, String message) {
+        Platform.runLater(() -> {
+            JFXDialogLayout dialogLayout = new JFXDialogLayout();
+            JFXButton button = new JFXButton("OK");
+            JFXDialog dialog = new JFXDialog(this.rootPane, dialogLayout, JFXDialog.DialogTransition.TOP);
+            button.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> dialog.close());
 
-        dialogLayout.setHeading(new Label(title));
-        dialogLayout.getStyleClass().add("errorHeading");
-        dialogLayout.setBody(new Label(message));
-        dialogLayout.setActions(button);
-        dialog.show();
-        BoxBlur blur = new BoxBlur(3, 3, 2);
-        this.menuTable.setEffect(blur);
-        dialog.setOnDialogClosed((JFXDialogEvent event) -> this.menuTable.setEffect(null));
+            dialogLayout.setHeading(new Label(title));
+            dialogLayout.getStyleClass().add("errorHeading");
+            dialogLayout.setBody(new Label(message));
+            dialogLayout.setActions(button);
+            dialog.show();
+            BoxBlur blur = new BoxBlur(3, 3, 2);
+            this.menuTable.setEffect(blur);
+            dialog.setOnDialogClosed((JFXDialogEvent event) -> this.menuTable.setEffect(null));
+        });
     }
 
     public void bookTrip() {
@@ -123,7 +129,7 @@ public class TripDetailsController implements Initializable, IAppObserver {
     @Override
     public void updateWindows(String destinationName, Timestamp departure, int seatNumber, String clientName) {
         System.out.println("tripController");
-        for(var e : entities)
+        for (var e : entities)
             if (e.getSeatNumber() == seatNumber) {
                 e.setClientName(clientName);
                 break;

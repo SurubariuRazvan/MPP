@@ -18,14 +18,11 @@ import services.IAppObserver;
 import services.IAppServices;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.net.URL;
-import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
 import java.sql.Timestamp;
 import java.util.ResourceBundle;
 
-public class LoginController extends UnicastRemoteObject implements Initializable, IAppObserver, Serializable {
+public class LoginController implements Initializable, IAppObserver {
 
     public JFXTextField logInUsername;
     public JFXPasswordField logInPassword;
@@ -34,10 +31,7 @@ public class LoginController extends UnicastRemoteObject implements Initializabl
     public HBox menuTable;
     private IAppServices loginService;
     private Stage primaryStage;
-    private AppController appController;
-
-    public LoginController() throws RemoteException {
-    }
+    public AppController appController;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -74,7 +68,7 @@ public class LoginController extends UnicastRemoteObject implements Initializabl
 
         User user = null;
         try {
-            user = loginService.login(username, rawPassword, this);
+            user = loginService.login(username, rawPassword);
         } catch (AppServiceException e) {
             showError("Login error", e.getMessage());
         }
@@ -95,8 +89,11 @@ public class LoginController extends UnicastRemoteObject implements Initializabl
             StackPane rootLayout = loader.load();
             appController = loader.getController();
 
-            appController.setService(loginService, user);
-
+            try {
+                appController.setService(loginService, user);
+            } catch (Throwable t) {
+                t.printStackTrace();
+            }
             primaryStage.setMinWidth(800);
             primaryStage.setMinHeight(500);
             primaryStage.setScene(new Scene(rootLayout));

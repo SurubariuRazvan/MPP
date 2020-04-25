@@ -6,8 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import service.GRPCService;
 import services.IAppServices;
 
 public class Gui extends Application {
@@ -23,16 +22,11 @@ public class Gui extends Application {
         StackPane rootLayout = loader.load();
         LoginController loginController = loader.getController();
 
-        String serverIP = "localhost";
-        int serverPort = 55556;
+        String ip = "localhost";
+        Integer port = 50050;
 
-        //IAppServices server = new AppProxyService(serverIP, serverPort, loginController);
-
-        ApplicationContext factory = new ClassPathXmlApplicationContext("classpath:spring-client.xml");
-        IAppServices server = (IAppServices) factory.getBean("appService");
-        System.out.println("Obtained a reference to remote chat server");
-
-        loginController.setService(server);
+        IAppServices service = new GRPCService(ip, port, loginController);
+        loginController.setService(service);
         loginController.setPrimaryStage(primaryStage);
 
         primaryStage.setOnCloseRequest(we -> loginController.close());

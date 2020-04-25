@@ -14,6 +14,7 @@
             <option value="$PROJECT_DIR$/AppClient" />
             <option value="$PROJECT_DIR$/AppDomain" />
             <option value="$PROJECT_DIR$/AppNetworking" />
+            <option value="$PROJECT_DIR$/AppNetworkingGRPC" />
             <option value="$PROJECT_DIR$/AppPersistence" />
             <option value="$PROJECT_DIR$/AppServer" />
             <option value="$PROJECT_DIR$/AppServices" />
