@@ -1,6 +1,20 @@
 package service;
 
-import app.*;
+import app.AppServiceGrpc;
+import app.GetTripIDByDestinationAndDepartureRequest;
+import app.GetTripIDByDestinationAndDepartureResponse;
+import app.LoginRequest;
+import app.LoginResponse;
+import app.LogoutRequest;
+import app.LogoutResponse;
+import app.ReserveRequest;
+import app.ReserveResponse;
+import app.ResponseType;
+import app.SearchRequest;
+import app.SearchResponse;
+import app.ShowTripsRequest;
+import app.ShowTripsResponse;
+import app.Type;
 import controller.LoginController;
 import domain.BookedTripDTO;
 import domain.TripDTO;
