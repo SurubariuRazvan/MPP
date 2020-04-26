@@ -12,12 +12,12 @@
 </ul>
 
 
-login:
-https://i.imgur.com/JZv99Tl.png
+# Login
+<img src="https://i.imgur.com/JZv99Tl.png"></img>
 
-main window:
-https://i.imgur.com/0kYLt4C.png
+# Main window:
+<img src="https://i.imgur.com/0kYLt4C.png"></img>
 
-booking window:
-https://i.imgur.com/zTsoBzo.png
-https://i.imgur.com/exw0gBh.png
+# Booking window:
+<img src="https://i.imgur.com/zTsoBzo.png"></img>
+<img src="https://i.imgur.com/exw0gBh.png"></img>
