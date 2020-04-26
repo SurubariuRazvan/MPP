@@ -1,4 +1,4 @@
-# MPP
+# BookTripApp
 
 <p>A client-server application for managing the trips for a booking company.</p>
 <p>The master branch has the java-java code and the GRPC branch has the java(client) - C# (server) code</p>
