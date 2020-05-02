@@ -3,13 +3,15 @@ package repository;
 import domain.Entity;
 import validation.ValidationException;
 
+import java.io.Serializable;
+
 /**
  * CRUD operations repository interface
  *
  * @param <ID> - type E must have an attribute of type ID
  * @param <E>  - type of entities saved in repository
  */
-public interface CRUDRepository<ID, E extends Entity<ID>> {
+public interface CRUDRepository<ID extends Serializable, E extends Entity<ID>> {
     /**
      * @param id -the id of the entity to be returned
      *           id must not be null

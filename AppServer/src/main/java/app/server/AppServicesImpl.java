@@ -1,4 +1,4 @@
-package server;
+package app.server;
 
 import domain.*;
 import repository.*;
@@ -17,14 +17,13 @@ import java.util.concurrent.Executors;
 
 public class AppServicesImpl implements IAppServices {
 
-    private final int defaultThreadsNo = 5;
     private final BookedTripRepository bookedTripRepo;
     private final ClientRepository clientRepo;
     private final DestinationRepository destinationRepo;
     private final TripRepository tripRepo;
-    private UserRepository userRepo;
+    private final UserRepository userRepo;
 
-    private Map<Integer, IAppObserver> loggedUsers;
+    private final Map<Integer, IAppObserver> loggedUsers;
 
 
     public AppServicesImpl(UserRepository userRepo, BookedTripRepository bookedTripRepo, ClientRepository clientRepo, DestinationRepository destinationRepo, TripRepository tripRepo) {
@@ -65,11 +64,6 @@ public class AppServicesImpl implements IAppServices {
     }
 
     @Override
-    public synchronized BookedTrip findClientID(Integer tripID, Integer seatNumber) throws AppServiceException {
-        return bookedTripRepo.findOne(new BookedTripID(tripID, seatNumber));
-    }
-
-    @Override
     public synchronized void reserve(int tripID, String clientName, int seatNumber) throws AppServiceException {
         Trip trip = tripRepo.findOne(tripID);
         if (trip == null)
@@ -94,6 +88,7 @@ public class AppServicesImpl implements IAppServices {
     }
 
     private void notifyUsers(String destinationName, Timestamp departure, Integer seatNumber, String clientName) {
+        int defaultThreadsNo = 5;
         ExecutorService executor = Executors.newFixedThreadPool(defaultThreadsNo);
         for(IAppObserver appObserver : loggedUsers.values())
             if (appObserver != null)

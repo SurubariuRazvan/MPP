@@ -3,8 +3,8 @@ package domain;
 import java.io.Serializable;
 
 public class BookedTripID implements Serializable {
-    int tripID;
-    int seatNumber;
+    private int tripID;
+    private int seatNumber;
 
     public BookedTripID(int tripID, int seatNumber) {
         this.tripID = tripID;

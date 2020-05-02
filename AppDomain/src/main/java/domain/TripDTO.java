@@ -4,9 +4,9 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 public class TripDTO implements Serializable {
-    String destinationName;
-    Timestamp departure;
-    int freeSeats;
+    private String destinationName;
+    private Timestamp departure;
+    private int freeSeats;
 
     public TripDTO(String destinationName, Timestamp departure, int freeSeats) {
         this.destinationName = destinationName;

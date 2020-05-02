@@ -2,18 +2,8 @@ package domain;
 
 import java.io.Serializable;
 
-public class Entity<ID> implements Serializable {
-    protected ID id;
+public interface Entity<ID extends Serializable> extends Serializable {
+    ID getId();
 
-    public Entity(ID id) {
-        this.id = id;
-    }
-
-    public ID getId() {
-        return id;
-    }
-
-    public void setId(ID id) {
-        this.id = id;
-    }
+    void setId(ID id);
 }

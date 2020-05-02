@@ -2,6 +2,8 @@ plugins {
     id 'java'
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.0.8'
+    id 'org.springframework.boot' version '2.2.6.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
 }
 version '1.0-SNAPSHOT'
 
@@ -32,10 +34,17 @@ dependencies {
     compile 'de.jensd:fontawesomefx-materialdesignfont:2.0.26-9.1.2'
     compile 'de.jensd:fontawesomefx-materialicons:2.2.0-9.1.2'
 
-    compile 'org.springframework:spring-core:4.3.26.RELEASE'
-    compile 'org.springframework:spring-context:4.3.26.RELEASE'
-    compile 'org.springframework:spring-beans:4.3.26.RELEASE'
-    compile 'org.springframework:spring-jdbc:4.3.26.RELEASE'
+    compile 'org.springframework:spring-core:5.2.6.RELEASE'
+    compile 'org.springframework:spring-context:5.2.6.RELEASE'
+    compile 'org.springframework:spring-beans:5.2.6.RELEASE'
+    compile 'org.springframework:spring-jdbc:5.2.6.RELEASE'
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+    implementation('org.postgresql:postgresql')
 }
 
 test {

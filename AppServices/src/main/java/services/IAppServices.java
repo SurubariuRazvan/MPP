@@ -12,8 +12,6 @@ import java.util.List;
 public interface IAppServices {
     List<BookedTripDTO> search(String destinationName, Timestamp departure) throws AppServiceException;
 
-    BookedTrip findClientID(Integer tripID, Integer seatNumber) throws AppServiceException;
-
     void reserve(int tripID, String clientName, int seatNumber) throws AppServiceException;
 
     List<TripDTO> showTrips() throws AppServiceException, RemoteException;

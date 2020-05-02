@@ -3,16 +3,27 @@ package domain;
 import java.sql.Timestamp;
 import java.util.Objects;
 
-public class Trip extends Entity<Integer> {
-    int destinationID;
-    Timestamp departure;
-    int freeSeats;
+public class Trip implements Entity<Integer> {
+    private Integer id;
+    private int destinationID;
+    private Timestamp departure;
+    private int freeSeats;
 
     public Trip(Integer id, Integer destinationID, Timestamp departure, int freeSeats) {
-        super(id);
+        this.id = id;
         this.destinationID = destinationID;
         this.departure = departure;
         this.freeSeats = freeSeats;
+    }
+
+    @Override
+    public Integer getId() {
+        return this.id;
+    }
+
+    @Override
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Integer getDestinationID() {

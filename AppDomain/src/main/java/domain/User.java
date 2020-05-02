@@ -2,18 +2,24 @@ package domain;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
-public class User extends Entity<Integer> {
-    String username;
-    String passwordHash;
+public class User implements Entity<Integer> {
+    private Integer id;
+    private String username;
+    private String passwordHash;
 
     public User(Integer id, String username, String passwordHash) {
-        super(id);
+        this.id = id;
         this.username = username;
         this.passwordHash = passwordHash;
     }
 
     public static String hash(String password) {
         return DigestUtils.sha256Hex(password);
+    }
+
+    @Override
+    public Integer getId() {
+        return this.id;
     }
 
     public String getUsername() {
@@ -30,5 +36,10 @@ public class User extends Entity<Integer> {
 
     public void setPasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;
+    }
+
+    @Override
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

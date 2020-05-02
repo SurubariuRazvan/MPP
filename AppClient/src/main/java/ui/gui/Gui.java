@@ -26,11 +26,11 @@ public class Gui extends Application {
         String serverIP = "localhost";
         int serverPort = 55556;
 
-        //IAppServices server = new AppProxyService(serverIP, serverPort, loginController);
+        //IAppServices app.server = new AppProxyService(serverIP, serverPort, loginController);
 
         ApplicationContext factory = new ClassPathXmlApplicationContext("classpath:spring-client.xml");
         IAppServices server = (IAppServices) factory.getBean("appService");
-        System.out.println("Obtained a reference to remote chat server");
+        System.out.println("Obtained a reference to remote chat app.server");
 
         loginController.setService(server);
         loginController.setPrimaryStage(primaryStage);

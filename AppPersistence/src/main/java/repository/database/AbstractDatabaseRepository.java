@@ -8,6 +8,7 @@ import repository.RepositoryException;
 import validation.CRUDValidator;
 import validation.ValidationException;
 
+import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-public abstract class AbstractDatabaseRepository<ID, E extends Entity<ID>> implements CRUDRepository<ID, E> {
+public abstract class AbstractDatabaseRepository<ID extends Serializable, E extends Entity<ID>> implements CRUDRepository<ID, E> {
 
     protected static final Logger logger = LogManager.getLogger();
     protected final CRUDValidator<E> validator;

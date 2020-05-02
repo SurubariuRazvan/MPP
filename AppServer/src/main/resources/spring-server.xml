@@ -40,7 +40,7 @@
     </bean>
 
 
-    <bean id="appService" class="server.AppServicesImpl">
+    <bean id="appService" class="app.server.AppServicesImpl">
         <constructor-arg ref="userRepo"/>
         <constructor-arg ref="bookedTripRepo"/>
         <constructor-arg ref="clientRepo"/>

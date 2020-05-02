@@ -1,40 +1,44 @@
 package domain;
 
-public class BookedTrip extends Entity<BookedTripID> {
-    int ClientID;
+public class BookedTrip implements Entity<BookedTripID> {
+    private BookedTripID id;
+
+    private int ClientID;
 
     public BookedTrip(int tripID, int seatNumber, int clientID) {
-        super(new BookedTripID(tripID, seatNumber));
+        this.id = new BookedTripID(tripID, seatNumber);
         this.ClientID = clientID;
     }
 
     public BookedTrip(BookedTripID bookedTripID, int clientID) {
-        super(bookedTripID);
+        this.id = bookedTripID;
         this.ClientID = clientID;
     }
 
-    public BookedTripID getBookedTripID() {
-        return super.getId();
+    @Override
+    public BookedTripID getId() {
+        return this.id;
     }
 
-    public void setBookedTripID(BookedTripID bookedTripID) {
-        super.setId(bookedTripID);
+    @Override
+    public void setId(BookedTripID bookedTripID) {
+        this.id = bookedTripID;
     }
 
     public int getTripID() {
-        return super.getId().getTripID();
+        return this.id.getTripID();
     }
 
     public void setTripID(int tripID) {
-        super.getId().setTripID(tripID);
+        this.id.setTripID(tripID);
     }
 
     public int getSeatNumber() {
-        return super.getId().getSeatNumber();
+        return this.id.getSeatNumber();
     }
 
     public void setSeatNumber(int seatNumber) {
-        super.getId().setSeatNumber(seatNumber);
+        this.id.setSeatNumber(seatNumber);
     }
 
     public int getClientID() {

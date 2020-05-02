@@ -1,11 +1,23 @@
 package domain;
 
-public class Client extends Entity<Integer> {
-    String name;
+public class Client implements Entity<Integer> {
+
+    private Integer id;
+    private String name;
 
     public Client(Integer id, String name) {
-        super(id);
+        this.id = id;
         this.name = name;
+    }
+
+    @Override
+    public Integer getId() {
+        return this.id;
+    }
+
+    @Override
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
