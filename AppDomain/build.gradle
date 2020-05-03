@@ -6,7 +6,16 @@ plugins {
 
 version '1.0-SNAPSHOT'
 
+group = 'com.jderu'
 sourceCompatibility = 1.8
+
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true
+}
 
 repositories {
     mavenCentral()

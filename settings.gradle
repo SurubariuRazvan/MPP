@@ -9,4 +9,5 @@ include 'AppServices'
 include 'AppPersistence'
 include 'AppDomain'
 include 'AppServices'
+include 'WebRequests'
 

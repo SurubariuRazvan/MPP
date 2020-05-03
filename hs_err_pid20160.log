@@ -648,7 +648,7 @@ Dynamic libraries:
 0x00007ffd8deb0000 - 0x00007ffd8df30000 	C:\WINDOWS\System32\bcryptPrimitives.dll
 0x00007ffd8e400000 - 0x00007ffd8e42e000 	C:\WINDOWS\System32\IMM32.DLL
 0x00007ffd3f3e0000 - 0x00007ffd3f47d000 	G:\IntelliJ IDEA 2019.3.3\jbr\bin\msvcp140.dll
-0x00007ffd16ac0000 - 0x00007ffd1757b000 	G:\IntelliJ IDEA 2019.3.3\jbr\bin\app.server\jvm.dll
+0x00007ffd16ac0000 - 0x00007ffd1757b000 	G:\IntelliJ IDEA 2019.3.3\jbr\bin\com.jderu.server\jvm.dll
 0x00007ffd8fd60000 - 0x00007ffd8fe03000 	C:\WINDOWS\System32\ADVAPI32.dll
 0x00007ffd8fc50000 - 0x00007ffd8fce7000 	C:\WINDOWS\System32\sechost.dll
 0x00007ffd8efa0000 - 0x00007ffd8efa8000 	C:\WINDOWS\System32\PSAPI.DLL
@@ -691,7 +691,7 @@ Dynamic libraries:
 0x00007ffd8c630000 - 0x00007ffd8c6fa000 	C:\WINDOWS\SYSTEM32\DNSAPI.dll
 
 dbghelp: loaded successfully - version: 4.0.5 - missing functions: none
-symbol engine: initialized successfully - sym options: 0x614 - pdb path: .;G:\IntelliJ IDEA 2019.3.3\jbr\bin;C:\WINDOWS\SYSTEM32;C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.18362.657_none_e6c5b579130e3898;G:\IntelliJ IDEA 2019.3.3\jbr\bin\app.server;C:\Users\RAZVAN\.gradle\native\28\windows-amd64
+symbol engine: initialized successfully - sym options: 0x614 - pdb path: .;G:\IntelliJ IDEA 2019.3.3\jbr\bin;C:\WINDOWS\SYSTEM32;C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.18362.657_none_e6c5b579130e3898;G:\IntelliJ IDEA 2019.3.3\jbr\bin\com.jderu.server;C:\Users\RAZVAN\.gradle\native\28\windows-amd64
 
 VM Arguments:
 jvm_args: --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lang.invoke=ALL-UNNAMED --add-opens=java.prefs/java.util.prefs=ALL-UNNAMED -XX:MaxMetaspaceSize=256m -XX:+HeapDumpOnOutOfMemoryError -Xmx512m -Dfile.encoding=UTF-8 -Duser.country=US -Duser.language=en -Duser.variant 

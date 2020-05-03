@@ -5,7 +5,7 @@
     <bean id="appService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
         <property name="serviceUrl" value="rmi://192.168.56.1:1199/App"/>
         <!-- <property name="serviceUrl" value="rmi://localhost:1099/App"/>-->
-        <property name="serviceInterface" value="services.IAppServices"/>
+        <property name="serviceInterface" value="com.jderu.services.IAppServices"/>
     </bean>
 
 

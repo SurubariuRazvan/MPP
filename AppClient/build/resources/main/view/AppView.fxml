@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.*?>
 <StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" prefHeight="400.0" prefWidth="600.0"
            stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/8.0.171"
-           fx:controller="controller.AppController">
+           fx:controller="com.jderu.app.controller.AppController">
     <BorderPane fx:id="menuTable" prefHeight="200.0" prefWidth="200.0">
         <center>
             <TableView fx:id="tripDTOTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">

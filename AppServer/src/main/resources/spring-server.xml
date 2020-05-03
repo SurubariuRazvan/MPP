@@ -1,58 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns:util="http://www.springframework.org/schema/util" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns="http://www.springframework.org/schema/beans"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/data/jpa https://www.springframework.org/schema/data/jpa/spring-jpa.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <context:component-scan base-package="com.jderu"/>
+    <jpa:repositories base-package="com.jderu.repository.JPARepository"/>
 
 
-    <util:properties id="userProps" location="classpath:userDB.properties"/>
-    <util:properties id="appProps" location="classpath:appDB.properties"/>
-
-    <bean id="userVal" class="validation.UserValidator"/>
-    <bean id="bookedTripVal" class="validation.BookedTripValidator"/>
-    <bean id="clientVal" class="validation.ClientValidator"/>
-    <bean id="destinationVal" class="validation.DestinationValidator"/>
-    <bean id="tripVal" class="validation.TripValidator"/>
-
-
-    <bean id="userRepo" class="repository.database.DatabaseUserRepository">
-        <constructor-arg ref="userVal"/>
-        <constructor-arg ref="userProps"/>
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="org.postgresql.Driver"/>
+        <property name="url" value="jdbc:postgresql://localhost:5432/postgres"/>
+        <property name="username" value="postgres"/>
+        <property name="password" value="793582"/>
     </bean>
 
-    <bean id="bookedTripRepo" class="repository.database.DatabaseBookedTripRepository">
-        <constructor-arg ref="bookedTripVal"/>
-        <constructor-arg ref="appProps"/>
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="packagesToScan" value="com.jderu"/>
+        <property name="dataSource" ref="dataSource"/>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="generateDdl" value="false"/>
+                <property name="showSql" value="false"/>
+            </bean>
+        </property>
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.format_sql">true</prop>
+            </props>
+        </property>
     </bean>
 
-    <bean id="clientRepo" class="repository.database.DatabaseClientRepository">
-        <constructor-arg ref="clientVal"/>
-        <constructor-arg ref="appProps"/>
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>
 
-    <bean id="destinationRepo" class="repository.database.DatabaseDestinationRepository">
-        <constructor-arg ref="destinationVal"/>
-        <constructor-arg ref="appProps"/>
-    </bean>
-
-    <bean id="tripRepo" class="repository.database.DatabaseTripRepository">
-        <constructor-arg ref="tripVal"/>
-        <constructor-arg ref="appProps"/>
-    </bean>
-
-
-    <bean id="appService" class="app.server.AppServicesImpl">
-        <constructor-arg ref="userRepo"/>
-        <constructor-arg ref="bookedTripRepo"/>
-        <constructor-arg ref="clientRepo"/>
-        <constructor-arg ref="destinationRepo"/>
-        <constructor-arg ref="tripRepo"/>
-    </bean>
-
-
-    <bean class="org.springframework.remoting.rmi.RmiServiceExporter">
-        <property name="serviceName" value="App"/>
-        <property name="service" ref="appService"/>
-        <property name="serviceInterface" value="services.IAppServices"/>
-        <property name="registryPort" value="1199"/>
-    </bean>
 </beans>

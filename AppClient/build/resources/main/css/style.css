@@ -78,7 +78,7 @@
     -fx-prompt-text-fill: #ef5350;
 }
 
-/*app-window*/
+/*com.jderu.app-window*/
 
 .jfx-date-picker > .jfx-text-field {
     -jfx-label-float: true;

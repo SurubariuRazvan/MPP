@@ -7,7 +7,7 @@ plugins {
 }
 version '1.0-SNAPSHOT'
 
-mainClassName = 'app.Main'
+mainClassName = 'com.jderu.app.Main'
 sourceCompatibility = 1.11
 
 repositories {
@@ -15,9 +15,8 @@ repositories {
 }
 
 dependencies {
-    compile project(':AppDomain')
+    implementation project(':AppDomain')
     compile project(':AppServices')
-    compile project(':AppPersistence')
 
 
     testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.4.2'
