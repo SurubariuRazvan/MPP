@@ -1,8 +1,23 @@
 package server;
 
-import app.BookedTripDTO;
-import app.TripDTO;
 import app.*;
+import app.AppServiceGrpc;
+import app.BookedTripDTO;
+import app.GetTripIDByDestinationAndDepartureRequest;
+import app.GetTripIDByDestinationAndDepartureResponse;
+import app.LoginRequest;
+import app.LoginResponse;
+import app.LogoutRequest;
+import app.LogoutResponse;
+import app.ReserveRequest;
+import app.ReserveResponse;
+import app.ResponseType;
+import app.SearchRequest;
+import app.SearchResponse;
+import app.ShowTripsRequest;
+import app.ShowTripsResponse;
+import app.TripDTO;
+import app.Type;
 import domain.*;
 import io.grpc.stub.StreamObserver;
 import repository.*;
@@ -39,7 +54,7 @@ public class AppServicesImpl extends AppServiceGrpc.AppServiceImplBase {
     }
 
     @Override
-    public void search(SearchRequest request, StreamObserver<SearchResponse> responseObserver) {
+    public void search(SearchRequest request, StreamObserver<app.SearchResponse> responseObserver) {
         var builder = SearchResponse.newBuilder();
         for (var a : bookedTripRepo.search(request.getDestinationName(), googleToSql(request.getDeparture())))
             builder.addList(BookedTripDTO.newBuilder().setClientID(a.getClientID()).setClientName(a.getClientName()).setSeatNumber(a.getSeatNumber()).build());
