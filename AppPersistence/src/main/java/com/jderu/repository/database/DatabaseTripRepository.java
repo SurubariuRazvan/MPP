@@ -14,7 +14,7 @@ import java.util.List;
 
 @Repository
 public class DatabaseTripRepository extends AbstractJPARepository<Integer, Trip> implements TripRepository {
-    private TripJPARepository repo;
+    private final TripJPARepository repo;
 
     @Autowired
     public DatabaseTripRepository(@Qualifier("tripValidator") CRUDValidator<Trip> validator, TripJPARepository repo) {

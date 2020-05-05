@@ -17,6 +17,7 @@
             <option value="$PROJECT_DIR$/AppPersistence" />
             <option value="$PROJECT_DIR$/AppServer" />
             <option value="$PROJECT_DIR$/AppServices" />
+            <option value="$PROJECT_DIR$/AppWeb" />
             <option value="$PROJECT_DIR$/Domain" />
             <option value="$PROJECT_DIR$/WebRequests" />
           </set>

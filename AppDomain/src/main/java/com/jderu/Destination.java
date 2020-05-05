@@ -1,12 +1,14 @@
 package com.jderu;
 
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @javax.persistence.Entity
 @Table(name = "Destination")
 public class Destination implements com.jderu.Entity<Integer> {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")

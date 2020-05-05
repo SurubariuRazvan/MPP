@@ -7,9 +7,6 @@ public class BookedTripDTO implements Serializable {
     private String clientName;
     private int seatNumber;
 
-    public BookedTripDTO() {
-    }
-
     public BookedTripDTO(int clientID, String clientName, int seatNumber) {
         this.clientID = clientID;
         this.clientName = clientName;

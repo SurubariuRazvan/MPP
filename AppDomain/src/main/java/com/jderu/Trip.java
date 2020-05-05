@@ -6,14 +6,13 @@ import java.util.Objects;
 
 
 @javax.persistence.Entity
-@Table(name = "Trip")
+@Table(name = "Trip", uniqueConstraints = {@UniqueConstraint(name = "Unique(\"destinationID\", \"departure\")", columnNames = {"destinationID", "departure"})})
 public class Trip implements com.jderu.Entity<Integer> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Integer id;
-
     @Column(name = "destinationID")
     private int destinationID;
     @Column(name = "departure")
@@ -24,7 +23,7 @@ public class Trip implements com.jderu.Entity<Integer> {
     public Trip() {
     }
 
-    public Trip(Integer id, Integer destinationID, Timestamp departure, int freeSeats) {
+    public Trip(Integer id, int destinationID, Timestamp departure, int freeSeats) {
         this.id = id;
         this.destinationID = destinationID;
         this.departure = departure;

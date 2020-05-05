@@ -1,5 +1,8 @@
 package com.jderu;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Embeddable;
 import javax.persistence.Table;
 import java.io.Serializable;
@@ -7,9 +10,7 @@ import java.io.Serializable;
 @Embeddable
 @Table(name = "Booked_trip")
 public class BookedTripID implements Serializable {
-
     private int tripID;
-
     private int seatNumber;
 
     public BookedTripID() {

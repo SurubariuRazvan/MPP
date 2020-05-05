@@ -9,5 +9,4 @@ import java.util.List;
 
 public interface BookedTripRepository extends CRUDRepository<BookedTripID, BookedTrip> {
     List<BookedTripDTO> search(String destinationName, Timestamp departure);
-
 }

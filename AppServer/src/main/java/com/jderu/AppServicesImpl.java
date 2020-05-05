@@ -1,7 +1,6 @@
 package com.jderu;
 
 import com.jderu.repository.*;
-import com.jderu.repository.JPARepository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.jderu.services.AppServiceException;

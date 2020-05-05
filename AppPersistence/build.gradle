@@ -22,9 +22,10 @@ repositories {
 }
 
 dependencies {
+    implementation project(':AppDomain')
+
     testCompile group: 'junit', name: 'junit', version: '4.12'
     compile group: 'commons-codec', name: 'commons-codec', version: '1.9'
-
 
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'

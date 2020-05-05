@@ -1,5 +1,7 @@
 package com.jderu;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import javax.persistence.*;
@@ -7,7 +9,6 @@ import javax.persistence.*;
 @javax.persistence.Entity
 @Table(name = "UserDB")
 public class User implements com.jderu.Entity<Integer> {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
@@ -17,13 +18,13 @@ public class User implements com.jderu.Entity<Integer> {
     @Column(name = "password_hash")
     private String passwordHash;
 
+    public User() {
+    }
+
     public User(Integer id, String username, String passwordHash) {
         this.id = id;
         this.username = username;
         this.passwordHash = passwordHash;
-    }
-
-    public User() {
     }
 
     @Override

@@ -1,11 +1,13 @@
 package com.jderu;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @javax.persistence.Entity
 @Table(name = "Booked_trip")
 public class BookedTrip implements Entity<BookedTripID> {
-
     @Id
     @AttributeOverrides({
             @AttributeOverride(name = "tripID", column = @Column(name = "tripID")),
@@ -19,13 +21,8 @@ public class BookedTrip implements Entity<BookedTripID> {
     public BookedTrip() {
     }
 
-    public BookedTrip(int tripID, int seatNumber, int clientID) {
-        this.id = new BookedTripID(tripID, seatNumber);
-        this.clientID = clientID;
-    }
-
-    public BookedTrip(BookedTripID bookedTripID, int clientID) {
-        this.id = bookedTripID;
+    public BookedTrip(BookedTripID id, int clientID) {
+        this.id = id;
         this.clientID = clientID;
     }
 

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class DatabaseClientRepository extends AbstractJPARepository<Integer, Client> implements ClientRepository {
-    private ClientJPARepository repo;
+    private final ClientJPARepository repo;
 
 
     @Autowired

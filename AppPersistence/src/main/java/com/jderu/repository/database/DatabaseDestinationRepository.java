@@ -1,5 +1,6 @@
 package com.jderu.repository.database;
 
+import com.jderu.Client;
 import com.jderu.repository.DestinationRepository;
 import com.jderu.repository.JPARepository.DestinationJPARepository;
 import com.jderu.repository.validation.CRUDValidator;
@@ -10,11 +11,12 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class DatabaseDestinationRepository extends AbstractJPARepository<Integer, Destination> implements DestinationRepository {
-    private DestinationJPARepository repo;
+    private final DestinationJPARepository repo;
 
     @Autowired
     public DatabaseDestinationRepository(@Qualifier("destinationValidator") CRUDValidator<Destination> validator, DestinationJPARepository repo) {
         super(validator,Destination.class,repo);
         this.repo = repo;
     }
+
 }

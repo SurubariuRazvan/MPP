@@ -15,7 +15,7 @@ import java.util.List;
 
 @Repository
 public class DatabaseBookedTripRepository extends AbstractJPARepository<BookedTripID,BookedTrip> implements BookedTripRepository {
-    private BookedTripJPARepository repo;
+    private final BookedTripJPARepository repo;
 
     @Autowired
     public DatabaseBookedTripRepository(@Qualifier("bookedTripValidator") CRUDValidator<BookedTrip> validator, BookedTripJPARepository repo) {
