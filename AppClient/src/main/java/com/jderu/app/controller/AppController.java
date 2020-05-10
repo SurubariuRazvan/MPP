@@ -66,7 +66,6 @@ public class AppController implements Initializable, IAppObserver {
                 searchByDate.setValue(time.toLocalDateTime().toLocalDate());
                 searchByTime.setValue(time.toLocalDateTime().toLocalTime());
             }
-
         });
     }
 
@@ -118,11 +117,10 @@ public class AppController implements Initializable, IAppObserver {
 
         if (destination != null && date != null && time != null) {
             var tripID = appService.getTripIDByDestinationAndDeparture(destination, Timestamp.valueOf(LocalDateTime.of(date, time)));
-            if (tripID != null) {
-                StackPane parent;
+            if (tripID != null)
                 try {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TripDetailsView.fxml"));
-                    parent = loader.load();
+                    StackPane parent = loader.load();
                     controller = loader.getController();
                     controller.setService(appService, this, tripID, user, destination, Timestamp.valueOf(LocalDateTime.of(date, time)));
                     Stage stage = new Stage();
@@ -132,10 +130,8 @@ public class AppController implements Initializable, IAppObserver {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            }
         }
     }
-
 
     public void logout() {
         try {

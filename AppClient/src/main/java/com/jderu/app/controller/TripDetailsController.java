@@ -119,7 +119,6 @@ public class TripDetailsController implements Initializable, IAppObserver {
         }
     }
 
-
     @Override
     public void updateWindows(String destinationName, Timestamp departure, int seatNumber, String clientName) {
         for (var e : entities)

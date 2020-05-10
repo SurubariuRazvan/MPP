@@ -6,7 +6,7 @@ import java.util.Objects;
 
 
 @javax.persistence.Entity
-@Table(name = "Trip", uniqueConstraints = {@UniqueConstraint(name = "Unique(\"destinationID\", \"departure\")", columnNames = {"destinationID", "departure"})})
+@Table(name = "Trip", uniqueConstraints = {@UniqueConstraint(name = "Unique(destinationID,departure)", columnNames = {"destinationID", "departure"})})
 public class Trip implements com.jderu.Entity<Integer> {
 
     @Id

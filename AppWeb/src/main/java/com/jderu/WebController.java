@@ -22,7 +22,7 @@ public class WebController {
     }
 
 
-    @GetMapping("/trip")
+    @GetMapping(value = "/trip")
     public Iterable<TripDTO> findAllTrip() {
         List<TripDTO> tripDTOList = new ArrayList<>();
         tripRepo.findAll().forEach(trip -> tripDTOList.add(

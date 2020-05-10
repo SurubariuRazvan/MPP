@@ -18,11 +18,14 @@ import com.jderu.services.IAppObserver;
 import com.jderu.services.IAppServices;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.URL;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.sql.Timestamp;
 import java.util.ResourceBundle;
 
-public class LoginController implements Initializable, IAppObserver {
+public class LoginController extends UnicastRemoteObject implements Initializable, IAppObserver, Serializable {
 
     public JFXTextField logInUsername;
     public JFXPasswordField logInPassword;
@@ -31,7 +34,10 @@ public class LoginController implements Initializable, IAppObserver {
     public HBox menuTable;
     private IAppServices loginService;
     private Stage primaryStage;
-    public AppController appController;
+    private AppController appController;
+
+    public LoginController() throws RemoteException {
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -68,7 +74,7 @@ public class LoginController implements Initializable, IAppObserver {
 
         User user = null;
         try {
-            user = loginService.login(username, rawPassword);
+            user = loginService.login(username, rawPassword, this);
         } catch (AppServiceException e) {
             showError("Login error", e.getMessage());
         }
@@ -89,11 +95,8 @@ public class LoginController implements Initializable, IAppObserver {
             StackPane rootLayout = loader.load();
             appController = loader.getController();
 
-            try {
-                appController.setService(loginService, user);
-            } catch (Throwable t) {
-                t.printStackTrace();
-            }
+            appController.setService(loginService, user);
+
             primaryStage.setMinWidth(800);
             primaryStage.setMinHeight(500);
             primaryStage.setScene(new Scene(rootLayout));
@@ -104,10 +107,6 @@ public class LoginController implements Initializable, IAppObserver {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public void close() {
-
     }
 
     @Override

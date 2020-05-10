@@ -23,11 +23,6 @@ public class Gui extends Application {
         StackPane rootLayout = loader.load();
         LoginController loginController = loader.getController();
 
-        String serverIP = "localhost";
-        int serverPort = 55556;
-
-        //IAppServices com.jderu.server = new AppProxyService(serverIP, serverPort, loginController);
-
         ApplicationContext factory = new ClassPathXmlApplicationContext("classpath:spring-client.xml");
         IAppServices server = (IAppServices) factory.getBean("appService");
         System.out.println("Obtained a reference to remote chat com.jderu.server");
@@ -35,7 +30,6 @@ public class Gui extends Application {
         loginController.setService(server);
         loginController.setPrimaryStage(primaryStage);
 
-        primaryStage.setOnCloseRequest(we -> loginController.close());
         primaryStage.setMinWidth(650);
         primaryStage.setMinHeight(450);
 
